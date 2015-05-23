@@ -156,7 +156,7 @@ public class Character {
         }
 
         if (experience >= 100) {
-            while (experience - 100 >= 100) {
+            while (experience >= 100) {
                 levelUp();
                 experience -= 100;
             }
