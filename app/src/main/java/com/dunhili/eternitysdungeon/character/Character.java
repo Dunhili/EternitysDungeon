@@ -1,5 +1,12 @@
 package com.dunhili.eternitysdungeon.character;
 
+import com.dunhili.eternitysdungeon.item.Armor;
+import com.dunhili.eternitysdungeon.item.Inventory;
+import com.dunhili.eternitysdungeon.item.Item;
+import com.dunhili.eternitysdungeon.item.Weapon;
+
+import java.util.List;
+
 /**
  * Represents all the characters in the game, which can include Non-playable characters (NPCs), such
  * as vendors, commoners, etc., playable characters (PCs), and enemies.
@@ -10,14 +17,18 @@ public class Character {
     // FIELDS
     //////////////////////////////////////////////////////////////
 
-    private int maxHP       = 1;
-    private int maxMana     = 1;
-    private int currentHP   = 1;
-    private int currentMana = 1;
-    private int level       = 1;
-    private int experience  = 0;
+    private int maxHP           = 1;
+    private int maxMana         = 1;
+    private int currentHP       = 1;
+    private int currentMana     = 1;
+    private int level           = 1;
+    private int experience      = 0;
+    private int experienceValue = 0;
 
     private Gender gender = Gender.MALE;
+    private Inventory inventory = new Inventory();
+    private Weapon equippedWeapon = null;
+    private Armor equippedArmor = null;
 
     //////////////////////////////////////////////////////////////
     // CONSTRUCTORS
@@ -44,7 +55,9 @@ public class Character {
      * @param maxHP max HP to set
      */
     public void setMaxHP(int maxHP) {
-        this.maxHP = maxHP;
+        if (maxHP > 0) {
+            this.maxHP = maxHP;
+        }
     }
 
     /**
@@ -60,7 +73,9 @@ public class Character {
      * @param maxMana max mana to set
      */
     public void setMaxMana(int maxMana) {
-        this.maxMana = maxMana;
+        if (maxMana > 0) {
+            this.maxMana = maxMana;
+        }
     }
 
     /**
@@ -76,7 +91,11 @@ public class Character {
      * @param currentHP current HP to set
      */
     public void setCurrentHP(int currentHP) {
-        this.currentHP = currentHP;
+        if (currentHP < 0) {
+            this.currentHP = 0;
+        } else {
+            this.currentHP = currentHP;
+        }
     }
 
     /**
@@ -92,7 +111,7 @@ public class Character {
      * @param currentMana current mana to set
      */
     public void setCurrentMana(int currentMana) {
-        this.currentMana = currentMana;
+        this.currentMana = (currentMana < 0) ? 0 : currentMana;
     }
 
     /**
@@ -171,12 +190,13 @@ public class Character {
      * @return true if the amount of money to add is valid, otherwise false
      */
     public boolean addMoney(int moneyToAdd) {
-        int money = 0; //TODO
+        int money = inventory.getMoney();
         if (money + moneyToAdd < 0) {
             return false;
         }
 
         money += moneyToAdd;
+        inventory.setMoney(money);
         return true;
     }
 
@@ -188,7 +208,7 @@ public class Character {
     public void addHP(int hpToAdd) {
         currentHP += hpToAdd;
         if (currentHP <= 0) {
-            die();
+            currentHP = 0;
         } else if (currentHP > maxHP) {
             currentHP = maxHP;
         }
@@ -215,13 +235,23 @@ public class Character {
         // TODO
     }
 
+    /**
+     * Removes the character and drops the character's inventory.
+     * @return character's inventory
+     */
+    public Inventory die() {
+        currentHP = 0;
+        currentMana = 0;
+
+        // TODO
+        List<Item> oldItems = inventory.getItems();
+        inventory.clear();
+        return new Inventory(oldItems);
+    }
+
     //////////////////////////////////////////////////////////////
     // PRIVATE METHODS
     //////////////////////////////////////////////////////////////
-
-    private void die() {
-        // TODO
-    }
 
     private void levelUp() {
         ++level;
