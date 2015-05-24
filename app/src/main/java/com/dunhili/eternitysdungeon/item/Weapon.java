@@ -8,8 +8,8 @@ public class Weapon extends Item {
     private int rangeAttack = 0;
     private int spellAttack = 0;
 
-    public Weapon(int value, int id, int meleeAttack, int rangeAttack, int spellAttack) {
-        super(value, id, 1);
+    public Weapon(String name, int value, int id, int meleeAttack, int rangeAttack, int spellAttack) {
+        super(name, value, id, 1);
         this.meleeAttack = meleeAttack;
         this.rangeAttack = rangeAttack;
         this.spellAttack = spellAttack;
@@ -29,7 +29,7 @@ public class Weapon extends Item {
 
     @Override
     public Item clone() {
-        Item weapon = new Weapon(getValue(), getId(), getMeleeAttack(), getRangeAttack(), getSpellAttack());
+        Item weapon = new Weapon(getName(), getValue(), getId(), getMeleeAttack(), getRangeAttack(), getSpellAttack());
         return weapon;
     }
 

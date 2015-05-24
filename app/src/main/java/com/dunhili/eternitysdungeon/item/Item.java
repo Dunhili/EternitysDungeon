@@ -8,12 +8,16 @@ public abstract class Item implements Comparable<Item>, Cloneable {
     //////////////////////////////////////////////////////////////
     // FIELDS
     //////////////////////////////////////////////////////////////
+    private static final String TAG = "Item";
 
     private static final int MAX_ITEM_COUNT = 99;
 
-    private int value = 0;
-    private int id = 0;
+    private String name = "";
+
+    private int value     = 0;
+    private int id        = 0;
     private int itemCount = 1;
+
     protected boolean consumable = false;
 
     //////////////////////////////////////////////////////////////
@@ -22,31 +26,35 @@ public abstract class Item implements Comparable<Item>, Cloneable {
 
     /**
      * Creates an item with the given value and ID.
+     * @param name name of the item
      * @param value item's value (in gp)
      * @param id item ID
      */
-    public Item(int value, int id) {
-        this(value, id, 1);
+    public Item(String name, int value, int id) {
+        this(name, value, id, 1);
     }
 
     /**
      * Creates an item with the given value, ID, and item count.
+     * @param name name of the item
      * @param value item's value (in gp)
      * @param id item ID
      * @param itemCount count of the item
      */
-    public Item(int value, int id, int itemCount) {
-        this(value, id, itemCount, false);
+    public Item(String name, int value, int id, int itemCount) {
+        this(name, value, id, itemCount, false);
     }
 
     /**
      * Creates an item with the given value, ID, item count, and consumable flag.
+     * @param name name of the item
      * @param value item's value (in gp)
      * @param id item ID
      * @param itemCount count of the item
      * @param consumable flag for whether the item is removed on use
      */
-    public Item(int value, int id, int itemCount, boolean consumable) {
+    public Item(String name, int value, int id, int itemCount, boolean consumable) {
+        this.name = name;
         this.value = value;
         this.id = id;
         this.itemCount = itemCount;
@@ -61,9 +69,7 @@ public abstract class Item implements Comparable<Item>, Cloneable {
      * Returns the item's value (in gp).
      * @return item's value
      */
-    public int getValue() {
-        return value;
-    }
+    public int getValue() { return value; }
 
     /**
      * Returns the item's ID.
@@ -91,9 +97,17 @@ public abstract class Item implements Comparable<Item>, Cloneable {
         }
     }
 
-    public boolean isConsumable() {
-        return consumable;
-    }
+    /**
+     * Returns the flag for whether the item is consumed on use.
+     * @return consumable flag
+     */
+    public boolean isConsumable() { return consumable; }
+
+    /**
+     * Returns the name of the item.
+     * @return item name
+     */
+    public String getName() { return name; }
 
     /**
      * Adds the count to the item count.
@@ -162,4 +176,13 @@ public abstract class Item implements Comparable<Item>, Cloneable {
     public abstract Item clone();
 
     public abstract void use();
+
+    /**
+     * Returns a String representation of the Item.
+     * @return String reprensetation of the Item
+     */
+    @Override
+    public String toString() {
+        return getName() + " (" + getId() + ") - " + getItemCount();
+    }
 }

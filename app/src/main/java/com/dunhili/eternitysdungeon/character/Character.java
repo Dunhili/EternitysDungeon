@@ -4,6 +4,7 @@ import com.dunhili.eternitysdungeon.item.Armor;
 import com.dunhili.eternitysdungeon.item.Inventory;
 import com.dunhili.eternitysdungeon.item.Item;
 import com.dunhili.eternitysdungeon.item.Weapon;
+import com.dunhili.eternitysdungeon.map.Position;
 
 import java.util.List;
 
@@ -16,6 +17,7 @@ public class Character {
     //////////////////////////////////////////////////////////////
     // FIELDS
     //////////////////////////////////////////////////////////////
+    private static final String TAG = "Character";
 
     private int maxHP           = 1;
     private int maxMana         = 1;
@@ -29,6 +31,7 @@ public class Character {
     private Inventory inventory = new Inventory();
     private Weapon equippedWeapon = null;
     private Armor equippedArmor = null;
+    private Position currentPosition;
 
     //////////////////////////////////////////////////////////////
     // CONSTRUCTORS

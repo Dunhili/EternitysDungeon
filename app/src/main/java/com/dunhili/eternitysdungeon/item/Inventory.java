@@ -1,5 +1,10 @@
 package com.dunhili.eternitysdungeon.item;
 
+import android.util.Log;
+
+import com.dunhili.eternitysdungeon.utils.Logging;
+
+import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -8,8 +13,17 @@ import java.util.ArrayList;
  * Created by Dunhili on 5/23/2015.
  */
 public class Inventory {
+    //////////////////////////////////////////////////////////////
+    // FIELDS
+    //////////////////////////////////////////////////////////////
+    private static final String TAG = "Inventory";
+
     private List<Item> items;
     private int money = 0;
+
+    //////////////////////////////////////////////////////////////
+    // CONSTRUCTORS
+    //////////////////////////////////////////////////////////////
 
     /**
      * Default constructor, creates an inventory of default size.
@@ -33,12 +47,17 @@ public class Inventory {
         addItems(items);
     }
 
+    //////////////////////////////////////////////////////////////
+    // PUBLIC METHODS
+    //////////////////////////////////////////////////////////////
+
     /**
      * Adds the given item to the inventory. If the item is in the inventory, adds the item's count
      * to the count of the item in the inventory.
      * @param item item to add
      */
     public void addItem(Item item) {
+        Logging.debug(TAG, "addItem(" + item.getName() + ")");
         int index = items.indexOf(item);
         if (index != -1) {
             items.get(index).addCount(item.getItemCount());
@@ -48,13 +67,34 @@ public class Inventory {
     }
 
     /**
-     * Removes the given item from the inventory.
+     * Removes the given item from the inventory. Returns true if the item was successfully
+     * removed, otherwise returns false.
      * @param item item to remove
+     * @return true if the item was removed, otherwise false
      */
     public boolean removeItem(Item item) {
+        Logging.debug(TAG, "removeItem(" + item.getName() + ")");
+        return removeItem(item, item.getItemCount());
+    }
+
+    /**
+     * Removes the given number from the item's count. If the amount to remove is greater than or
+     * equal to the item count, then removes the item altogether from the list. Returns true if
+     * the item was successfully removed, otherwise returns false.
+     * @param item item to remove
+     * @param amountToRemove amount of the item to remove from the inventory
+     * @return true if the item was removed, otherwise false
+     */
+    public boolean removeItem(Item item, int amountToRemove) {
+        Logging.debug(TAG, "removeItem(" + item.getName() + ", " + amountToRemove + ")");
         int index = items.indexOf(item);
         if (index != -1) {
-            items.remove(index);
+            Item itemToRemove = items.get(index);
+            if (amountToRemove >= itemToRemove.getItemCount()) {
+                items.remove(index);
+            } else {
+                itemToRemove.addCount(-amountToRemove);
+            }
             return true;
         }
         return false;
@@ -65,6 +105,7 @@ public class Inventory {
      * @param item item to use
      */
     public boolean useItem(Item item) {
+        Logging.debug(TAG, "useItem(" + item.getName() + ")");
         int index = items.indexOf(item);
         if (index != -1) {
             Item itemToUse = items.get(index);
@@ -86,6 +127,7 @@ public class Inventory {
      * @return item if it's found, or null if not found
      */
     public Item getItemByIndex(int index) {
+        Logging.debug(TAG, "getItemByIndex(" + index + ")");
         if (index < 0 || index >= items.size()) {
             return null;
         }
@@ -98,6 +140,7 @@ public class Inventory {
      * @return item that matches the ID if it's in the inventory, otherwise null
      */
     public Item getItemByID(int id) {
+        Logging.debug(TAG, "getItemByID(" + id + ")");
         for (Item item : items) {
             if (item.getId() == id) {
                 return item;
@@ -111,6 +154,7 @@ public class Inventory {
      * @return amount of money
      */
     public int getMoney() {
+        Logging.debug(TAG, "getMoney()");
         return money;
     }
 
@@ -119,6 +163,7 @@ public class Inventory {
      * @param money money to set
      */
     public void setMoney(int money) {
+        Logging.debug(TAG, "setMoney(" + money + ")");
         if (money >= 0) {
             this.money = money;
         }
@@ -131,6 +176,7 @@ public class Inventory {
      * @return item if it's found, otherwise null
      */
     public Item getItem(Item itemToFind) {
+        Logging.debug(TAG, "getItem(" + itemToFind.getName() + ")");
         return getItemByID(itemToFind.getId());
     }
 
@@ -139,6 +185,7 @@ public class Inventory {
      * @return list of items
      */
     public List<Item> getItems() {
+        Logging.debug(TAG, "getItems()");
         List<Item> clonedItems = new ArrayList<>();
         for (Item item : items) {
             clonedItems.add(item.clone());
@@ -151,9 +198,20 @@ public class Inventory {
      * @param itemsToAdd items to add to the inventory
      */
     public void addItems(List<Item> itemsToAdd) {
+        Logging.debug(TAG, "addItems(Num items : " + itemsToAdd.size() + ")");
         for (Item item : itemsToAdd) {
             addItem(item.clone());
         }
+    }
+
+    /**
+     * Sorts the list of items by ID and returns the sorted inventory.
+     * @return sorted inventory
+     */
+    public Inventory sortInventory() {
+        Logging.debug(TAG, "sortInventory()");
+        Arrays.sort(items.toArray());
+        return this;
     }
 
     /**
@@ -161,6 +219,7 @@ public class Inventory {
      * @param inventory inventory to add
      */
     public void addInventory(Inventory inventory) {
+        Logging.debug(TAG, "addInventory(Num items : " + inventory.getItems().size() + ")");
         addItems(inventory.getItems());
     }
 
@@ -168,6 +227,7 @@ public class Inventory {
      * Clears the inventory.
      */
     public void clear() {
+        Logging.debug(TAG, "clear()");
         items.clear();
     }
 }
