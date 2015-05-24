@@ -1,7 +1,5 @@
 package com.dunhili.eternitysdungeon.item;
 
-import android.util.Log;
-
 import com.dunhili.eternitysdungeon.utils.Logging;
 
 import java.util.Arrays;
@@ -169,6 +167,14 @@ public class Inventory {
         }
     }
 
+    public void addMoney(int moneyToAdd) {
+        Logging.debug(TAG, "addMoney(" + moneyToAdd + ")");
+        money += moneyToAdd;
+        if (money < 0) {
+            money = 0;
+        }
+    }
+
     /**
      * Returns the item in the inventory that equals the given item if it's found, otherwise
      * returns null.
@@ -221,6 +227,7 @@ public class Inventory {
     public void addInventory(Inventory inventory) {
         Logging.debug(TAG, "addInventory(Num items : " + inventory.getItems().size() + ")");
         addItems(inventory.getItems());
+        addMoney(inventory.getMoney());
     }
 
     /**

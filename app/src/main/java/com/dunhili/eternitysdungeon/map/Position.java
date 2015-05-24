@@ -32,7 +32,5 @@ public class Position {
         return new Position(x - 1, y);
     }
 
-    public Position moveRight() {
-        return new Position(x + 1, y);
-    }
+    public Position moveRight() { return new Position(x + 1, y); }
 }

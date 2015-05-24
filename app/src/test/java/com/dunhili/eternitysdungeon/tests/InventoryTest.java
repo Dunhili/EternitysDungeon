@@ -27,7 +27,7 @@ public class InventoryTest extends TestCase {
      * Tests the {@link Inventory#removeItem(Item)} and {@link Inventory#addItem(Item)} methods.
      */
     public void testAddAndRemoveItems() {
-        Armor armor1 = new Armor("testArmor", 10, 1, 1, 1, 1);
+        Armor armor1 = new Armor("testArmor", 10, 1, 1, 1);
         inventory.addItem(armor1);
         assertEquals(1, inventory.getItem(armor1).getItemCount());
         assertEquals(armor1, inventory.getItem(armor1));
@@ -36,7 +36,7 @@ public class InventoryTest extends TestCase {
         inventory.addItem(armor1);
         assertEquals(2, inventory.getItem(armor1).getItemCount());
 
-        Weapon weapon1 = new Weapon("testWeapon", 10, 2, 1, 1, 1);
+        Weapon weapon1 = new Weapon("testWeapon", 10, 2, 1, 1);
         inventory.addItem(weapon1);
         assertEquals(1, inventory.getItem(weapon1).getItemCount());
         assertEquals(weapon1, inventory.getItem(weapon1));
