@@ -4,6 +4,8 @@ package com.dunhili.eternitysdungeon.map;
  * Created by Dunhili on 5/24/2015.
  */
 public class Position {
+    private static final String TAG = "Position";
+
     private int x;
     private int y;
 

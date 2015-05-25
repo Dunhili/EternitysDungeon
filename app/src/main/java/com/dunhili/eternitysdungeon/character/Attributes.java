@@ -1,20 +1,17 @@
 package com.dunhili.eternitysdungeon.character;
 
+import java.util.Random;
+
 /**
  * Created by Dunhili on 5/24/2015.
  */
 public class Attributes {
-    private int maxHP           = 1;
-    private int maxMana         = 1;
+    private static final String TAG = "Attributes";
+
+    private Stat[] stats = new Stat[StatType.values().length];
+
     private int currentHP       = 1;
     private int currentMana     = 1;
-
-    private int strength        = 1;
-    private int dexterity       = 1;
-    private int intelligence    = 1;
-    private int willpower       = 1;
-    private int defense         = 1;
-    private int resistance      = 1;
 
     private int level           = 1;
     private int experience      = 0;
@@ -22,49 +19,72 @@ public class Attributes {
 
     private int moveSpeed       = 1;
 
+    public Attributes(int[] initialStats, int[] growthRates) {
+        StatType[] listOfStats = StatType.values();
+        // this is done because the list of stats are not going to be in order, so we get their
+        // index and grab the corresponding values from the initial stats and growth rates
+        for (int i = 0; i < listOfStats.length; i++) {
+            int currIndex = listOfStats[i].getIndex();
+            stats[currIndex] = new Stat(listOfStats[i], initialStats[currIndex], growthRates[currIndex]);
+        }
+
+        currentHP = getMaxHP().getValue();
+        currentMana = getMaxMana().getValue();
+    }
+
     /**
      * Returns the max HP for the character.
      * @return max HP
      */
-    public int getMaxHP() {
-        return maxHP;
-    }
-
-    /**
-     * Sets the max HP for the character to the given value.
-     * @param maxHP max HP to set
-     */
-    public void setMaxHP(int maxHP) {
-        if (maxHP > 0) {
-            this.maxHP = maxHP;
-        }
-    }
+    public Stat getMaxHP() { return stats[StatType.HITPOINTS.getIndex()]; }
 
     /**
      * Returns the max mana for the character.
      * @return max mana
      */
-    public int getMaxMana() {
-        return maxMana;
-    }
+    public Stat getMaxMana() { return stats[StatType.MANA.getIndex()]; }
 
     /**
-     * Sets the max mana for the character to the given value.
-     * @param maxMana max mana to set
+     * Returns the strength of the character.
+     * @return strength
      */
-    public void setMaxMana(int maxMana) {
-        if (maxMana > 0) {
-            this.maxMana = maxMana;
-        }
-    }
+    public Stat getStrength() { return stats[StatType.STRENGTH.getIndex()]; }
+
+    /**
+     * Returns the dexterity of the character.
+     * @return dexterity
+     */
+    public Stat getDexterity() { return stats[StatType.DEXTERITY.getIndex()]; }
+
+    /**
+     * Returns the intelligence of the character.
+     * @return intelligence
+     */
+    public Stat getIntelligence() { return stats[StatType.INTELLIGENCE.getIndex()]; }
+
+    /**
+     * Returns the willpower of the character.
+     * @return willpower
+     */
+    public Stat getWillpower() { return stats[StatType.WILLPOWER.getIndex()]; }
+
+    /**
+     * Returns the defense of the character.
+     * @return defense
+     */
+    public Stat getDefense() { return stats[StatType.DEFENSE.getIndex()]; }
+
+    /**
+     * Returns the resistance of the character.
+     * @return resistance
+     */
+    public Stat getResistance() { return stats[StatType.RESISTANCE.getIndex()]; }
 
     /**
      * Returns the current HP for the character.
      * @return current HP
      */
-    public int getCurrentHP() {
-        return currentHP;
-    }
+    public int getCurrentHP() { return currentHP; }
 
     /**
      * Sets the current HP for the character to the given value.
@@ -73,6 +93,8 @@ public class Attributes {
     public void setCurrentHP(int currentHP) {
         if (currentHP < 0) {
             this.currentHP = 0;
+        } else if (currentHP > getMaxHP().getValue()) {
+            this.currentHP = getMaxHP().getValue();
         } else {
             this.currentHP = currentHP;
         }
@@ -82,16 +104,20 @@ public class Attributes {
      * Returns the current mana for the character.
      * @return current mana
      */
-    public int getCurrentMana() {
-        return currentMana;
-    }
+    public int getCurrentMana() { return currentMana; }
 
     /**
      * Sets the current mana for the character to the given value.
      * @param currentMana current mana to set
      */
     public void setCurrentMana(int currentMana) {
-        this.currentMana = (currentMana < 0) ? 0 : currentMana;
+        if (currentMana < 0) {
+            this.currentMana = 0;
+        } else if (currentMana > getMaxMana().getValue()) {
+            this.currentMana = getMaxMana().getValue();
+        } else {
+            this.currentMana = currentMana;
+        };
     }
 
     /**
@@ -107,7 +133,9 @@ public class Attributes {
      * @param level level to set
      */
     public void setLevel(int level) {
-        this.level = level;
+        if (level >= 1) {
+            this.level = level;
+        }
     }
 
     /**
@@ -123,7 +151,9 @@ public class Attributes {
      * @param experience experience amount to set
      */
     public void setExperience(int experience) {
-        this.experience = experience;
+        if (experience >= 0) {
+            this.experience = experience;
+        }
     }
 
 
@@ -140,7 +170,9 @@ public class Attributes {
      * @param moveSpeed movement speed to set
      */
     public void setMoveSpeed(int moveSpeed) {
-        this.moveSpeed = moveSpeed;
+        if (moveSpeed >= 0) {
+            this.moveSpeed = moveSpeed;
+        }
     }
 
     /**
@@ -156,55 +188,9 @@ public class Attributes {
      * @param experienceValue experience value
      */
     public void setExperienceValue(int experienceValue) {
-        this.experienceValue = experienceValue;
-    }
-
-    public int getStrength() {
-        return strength;
-    }
-
-    public void setStrength(int strength) {
-        this.strength = strength;
-    }
-
-    public int getDexterity() {
-        return dexterity;
-    }
-
-    public void setDexterity(int dexterity) {
-        this.dexterity = dexterity;
-    }
-
-    public int getIntelligence() {
-        return intelligence;
-    }
-
-    public void setIntelligence(int intelligence) {
-        this.intelligence = intelligence;
-    }
-
-    public int getWillpower() {
-        return willpower;
-    }
-
-    public void setWillpower(int willpower) {
-        this.willpower = willpower;
-    }
-
-    public int getDefense() {
-        return defense;
-    }
-
-    public void setDefense(int defense) {
-        this.defense = defense;
-    }
-
-    public int getResistance() {
-        return resistance;
-    }
-
-    public void setResistance(int resistance) {
-        this.resistance = resistance;
+        if (experienceValue >= 0) {
+            this.experienceValue = experienceValue;
+        }
     }
 
     /**
@@ -228,17 +214,11 @@ public class Attributes {
     }
 
     /**
-     * Adds the HP to the current HP. If the HP drops to 0 or lower, then the character dies and
-     * drops its inventory.
+     * Adds the HP to the current HP.
      * @param hpToAdd amount of HP to add
      */
     public void addHP(int hpToAdd) {
-        currentHP += hpToAdd;
-        if (currentHP <= 0) {
-            currentHP = 0;
-        } else if (currentHP > maxHP) {
-            currentHP = maxHP;
-        }
+        setCurrentHP(currentHP + hpToAdd);
     }
 
     /**
@@ -246,16 +226,23 @@ public class Attributes {
      * @param manaToAdd amount of mana to add
      */
     public void addMana(int manaToAdd) {
-        currentMana += manaToAdd;
-        if (currentMana < 0) {
-            currentMana = 0;
-        } else if (currentMana > maxMana) {
-            currentMana = maxMana;
-        }
+        setCurrentMana(currentMana + manaToAdd);
     }
 
     private void levelUp() {
         ++level;
-        // TODO
+
+        Random rand = new Random();
+        for (Stat stat : stats) {
+            int growthRate = stat.getGrowthRate();
+            while (growthRate > 0) {
+                int roll = rand.nextInt(100) + 1;
+                if (roll <= growthRate) {
+                    stat.setValue(stat.getValue() + 1);
+                }
+                growthRate -= 100;
+            }
+        }
+        // TODO if (level == 10) choose prestige class
     }
 }

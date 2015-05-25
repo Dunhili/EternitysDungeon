@@ -4,6 +4,8 @@ package com.dunhili.eternitysdungeon.item;
  * Created by Dunhili on 5/23/2015.
  */
 public class Weapon extends Item {
+    private static final String TAG = "Weapon";
+
     private WeaponType weaponType = WeaponType.SWORD;
     private int physicalAttack = 0;
     private int spellAttack    = 0;

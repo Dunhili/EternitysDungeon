@@ -1,5 +1,7 @@
 package com.dunhili.eternitysdungeon.item;
 
+import android.media.Image;
+
 /**
  * Represents an item that can be used or worn by the characters.
  * Created by Dunhili on 5/23/2015.
@@ -17,6 +19,8 @@ public abstract class Item implements Comparable<Item>, Cloneable {
     private int value     = 0;
     private int id        = 0;
     private int itemCount = 1;
+
+    private Image portrait;
 
     protected boolean consumable = false;
 
@@ -75,9 +79,7 @@ public abstract class Item implements Comparable<Item>, Cloneable {
      * Returns the item's ID.
      * @return item's ID
      */
-    public int getId() {
-        return id;
-    }
+    public int getId() { return id; }
 
     /**
      * Returns the item count.
@@ -108,6 +110,8 @@ public abstract class Item implements Comparable<Item>, Cloneable {
      * @return item name
      */
     public String getName() { return name; }
+
+    public Image getPortrait() { return portrait; }
 
     /**
      * Adds the count to the item count.

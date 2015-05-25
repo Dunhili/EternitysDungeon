@@ -12,5 +12,5 @@ public enum Gender {
     /** Gender that is not male or female. */
     OTHER,
     /** Gender-less character. */
-    NONE
+    NONE;
 }
