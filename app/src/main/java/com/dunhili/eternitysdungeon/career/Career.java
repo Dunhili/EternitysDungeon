@@ -10,18 +10,11 @@ public abstract class Career {
 
     private String name;
 
-    private int initialStats[] = new int[StatType.values().length];
     private int growthRates[] = new int[StatType.values().length];
     private int statCaps[] = new int[StatType.values().length];
 
-    private boolean isBaseCareer = true;
-
     public Career() {
 
-    }
-
-    public int[] getInitialStats() {
-        return initialStats;
     }
 
     public int[] getGrowthRates() {

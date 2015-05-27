@@ -1,37 +1,54 @@
 package com.dunhili.eternitysdungeon.item;
 
+import com.dunhili.eternitysdungeon.utils.Logging;
+
 /**
+ * Represents the attributes for the armor a character would wear.
  * Created by Dunhili on 5/23/2015.
  */
 public class Armor extends Item {
     private static final String TAG = "Armor";
 
-    private int physicalDefense = 0;
-    private int magicDefense = 0;
+    private ArmorAttributes armorAttr;
 
-    public Armor(String name, int value, int id, int physicalDefense, int magicDefense) {
+    /**
+     * Creates a new Armor with the given attributes.
+     * @param armorAttr wrapper for the armor attributes
+     * @param name name of the armor
+     * @param value value (in gp) of the armor
+     * @param id unique ID for the armor
+     */
+    public Armor(ArmorAttributes armorAttr, String name, int value, int id) {
         super(name, value, id, 1);
-        this.physicalDefense = physicalDefense;
-        this.magicDefense = magicDefense;
+        this.armorAttr = armorAttr;
     }
 
-    public int getPhysicalDefense() {
-        return physicalDefense;
+    /**
+     * Returns the set of armor attributes.
+     * @return armor attributes
+     */
+    public ArmorAttributes getArmorAttr() {
+        Logging.debug(TAG, "getArmorAttr()");
+        return armorAttr;
     }
 
-
-    public int getMagicDefense() {
-        return magicDefense;
-    }
-
+    /**
+     * Returns a deep copy of the armor.
+     * @return deep copy of the armor
+     */
     @Override
     public Item clone() {
-        Item armor = new Armor(getName(), getValue(), getId(), getPhysicalDefense(), getMagicDefense());
+        Logging.debug(TAG, "clone()");
+        Item armor = new Armor(getArmorAttr(), getName(), getValue(), getId());
         return armor;
     }
 
+    /**
+     * Uses the armor, if the armor is listed as consumable, then it is destroyed afterward.
+     */
     @Override
     public void use() {
+        Logging.debug(TAG, "use()");
         return;
     }
 }

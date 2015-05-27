@@ -1,5 +1,6 @@
 package com.dunhili.eternitysdungeon.tests;
 
+import com.dunhili.eternitysdungeon.career.BaseCareer;
 import com.dunhili.eternitysdungeon.character.Character;
 import junit.framework.TestCase;
 
@@ -13,7 +14,8 @@ public class CharacterTest extends TestCase {
      * Called before every test method.
      */
     public void setUp() {
-        character = new Character();
+        BaseCareer baseCareer = new BaseCareer();
+        character = new Character(baseCareer);
     }
 
     public void testWeaponCalculations() {

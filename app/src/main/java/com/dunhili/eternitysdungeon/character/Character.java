@@ -1,5 +1,6 @@
 package com.dunhili.eternitysdungeon.character;
 
+import com.dunhili.eternitysdungeon.career.BaseCareer;
 import com.dunhili.eternitysdungeon.career.Career;
 import com.dunhili.eternitysdungeon.item.Armor;
 import com.dunhili.eternitysdungeon.item.Inventory;
@@ -33,9 +34,10 @@ public class Character {
     // CONSTRUCTORS
     //////////////////////////////////////////////////////////////
 
-    public Character() {
+    public Character(BaseCareer startingCareer) {
         // new career
-        attributes = new Attributes(career.getInitialStats(), career.getGrowthRates());
+        career = startingCareer;
+        attributes = new Attributes(startingCareer.getInitialStats(), career.getGrowthRates());
     }
 
     //////////////////////////////////////////////////////////////
@@ -84,11 +86,15 @@ public class Character {
         return true;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getPhysicalAttackDamage() {
         if (equippedWeapon == null) {
             return attributes.getStrength().getValue();
         } else {
-            return equippedWeapon.getPhysicalAttack();
+            return equippedWeapon.getWeaponAttr().getPhysicalAttack();
         }
     }
 
@@ -96,7 +102,7 @@ public class Character {
         if (equippedWeapon == null) {
             return attributes.getIntelligence().getValue();
         } else {
-            return equippedWeapon.getSpellAttack();
+            return equippedWeapon.getWeaponAttr().getMagicAttack();
         }
     }
 
@@ -104,7 +110,7 @@ public class Character {
         if (equippedArmor == null) {
             return attributes.getDefense().getValue();
         } else {
-            return equippedArmor.getPhysicalDefense() + attributes.getDefense().getValue();
+            return equippedArmor.getArmorAttr().getPhysicalDefense() + attributes.getDefense().getValue();
         }
     }
 
@@ -112,7 +118,7 @@ public class Character {
         if (equippedArmor == null) {
             return attributes.getResistance().getValue();
         } else {
-            return equippedArmor.getMagicDefense() + attributes.getResistance().getValue();
+            return equippedArmor.getArmorAttr().getMagicDefense() + attributes.getResistance().getValue();
         }
     }
 
