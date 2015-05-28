@@ -1,5 +1,7 @@
 package com.dunhili.eternitysdungeon.character;
 
+import com.dunhili.eternitysdungeon.utils.StatCalculator;
+
 import java.util.Random;
 
 /**
@@ -231,18 +233,6 @@ public class Attributes {
 
     private void levelUp() {
         ++level;
-
-        Random rand = new Random();
-        for (Stat stat : stats) {
-            int growthRate = stat.getGrowthRate();
-            while (growthRate > 0) {
-                int roll = rand.nextInt(100) + 1;
-                if (roll <= growthRate) {
-                    stat.setValue(stat.getValue() + 1);
-                }
-                growthRate -= 100;
-            }
-        }
-        // TODO if (level == 10) choose prestige class
+        StatCalculator.levelUp(stats);
     }
 }
