@@ -10,12 +10,14 @@ public class Stat {
     private String shortName;
     private int value;
     private int growthRate;
+    private int cap;
 
-    public Stat(StatType type, int value, int growthRate) {
+    public Stat(StatType type, int value, int growthRate, int cap) {
         name = type.getName();
         shortName = type.getShortName();
         this.value = value;
         this.growthRate = growthRate;
+        this.cap = cap;
     }
 
     public String getName() {
@@ -41,4 +43,8 @@ public class Stat {
     public void setGrowthRate(int growthRate) {
         this.growthRate = growthRate;
     }
+
+    public int getCap() { return cap; }
+
+    public void setCap(int cap) { this.cap = cap; }
 }

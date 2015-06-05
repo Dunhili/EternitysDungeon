@@ -21,13 +21,13 @@ public class Attributes {
 
     private int moveSpeed       = 1;
 
-    public Attributes(int[] initialStats, int[] growthRates) {
+    public Attributes(int[] initialStats, int[] growthRates, int[] statCaps) {
         StatType[] listOfStats = StatType.values();
         // this is done because the list of stats are not going to be in order, so we get their
         // index and grab the corresponding values from the initial stats and growth rates
         for (int i = 0; i < listOfStats.length; i++) {
             int currIndex = listOfStats[i].getIndex();
-            stats[currIndex] = new Stat(listOfStats[i], initialStats[currIndex], growthRates[currIndex]);
+            stats[currIndex] = new Stat(listOfStats[i], initialStats[currIndex], growthRates[currIndex], statCaps[currIndex]);
         }
 
         currentHP = getMaxHP().getValue();
