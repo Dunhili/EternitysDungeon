@@ -1,0 +1,68 @@
+           Warrior      -> Hero
+Fighter
+           Barbarian    -> Berserker
+
+
+           Bishop       -> Cardinal
+Priest
+           Cleric       -> Saint
+
+
+           Marksman     -> Sniper
+Archer
+           Ranger       -> Beast Master
+
+
+           Mercenary    -> Assassin
+Thief
+           Scoundrel    -> Rogue
+
+
+           Sage         -> Archsage
+Mage
+           Summoner     -> Master Summoner
+
+
+           Templar      -> Paladin
+Squire
+           Knight       -> Guardian
+
+
+           Necromancer  -> Lich
+Diabolist
+           Occultist    -> Warlock
+
+
+           Bard         -> Minstrel
+Performer
+           Dancer       -> Superstar
+
+
+           Shapeshifter -> Herald of Nature
+Druid
+           Archdruid    -> Keeper of the Forest
+
+
+           Engineer     -> Architect
+Tinkerer
+           Inventor     -> Master Craftsman
+
+
+           Sword Master -> Sword Saint
+Myrmidon
+           Spell Sword  -> Mage Knight
+
+
+           Alchemist    -> Thaumaturge
+Chemist
+           Medic        -> Doctor
+
+
+           Black Belt   -> Grand Master
+Monk
+           Brawler      -> Champion
+
+
+           Pirate       -> Captain
+Bandit
+           Marauder     -> Conqueror

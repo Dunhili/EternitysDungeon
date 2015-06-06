@@ -19,13 +19,17 @@ public abstract class Career {
 
     private List<Ability> abilities;
 
-    public Career(String name, int[] growthRates, int[] statCaps) {
+    public Career(String name, int[] growthRates, int[] statCaps, Ability[] abilities) {
         this.name = name;
         for (int i = 0; i < StatType.values().length; i++) {
             this.growthRates[i] = growthRates[i];
             this.statCaps[i] = statCaps[i];
         }
-        abilities = new ArrayList<>();
+
+        this.abilities = new ArrayList<>();
+        for (Ability ability : abilities) {
+            this.abilities.add(ability);
+        }
     }
 
     public String getName() {
