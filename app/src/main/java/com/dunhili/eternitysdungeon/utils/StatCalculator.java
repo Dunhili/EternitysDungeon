@@ -32,7 +32,7 @@ public class StatCalculator {
         return statValue;
     }
 
-    private static int[] getStatStatistics(int initialStat, int growthRate, int startingLevel, int numLevels) {
+    /*private static int[] getStatStatistics(int initialStat, int growthRate, int startingLevel, int numLevels) {
         final int NUM_RUNS = 25;
         int low = 999;
         int average = 0;
@@ -72,5 +72,5 @@ public class StatCalculator {
             System.out.println(stats[i] + "\n\tStart : " + initialStats[i] + "\n\tGrowth: " + growthRates[i] +
                     "\n\tLow : " + result[0] + "\n\tAverage : " + result[1] + "\n\tHigh : " + result[2]);
         }
-    }
+    }*/
 }

@@ -37,7 +37,7 @@ public class Character {
     public Character(BaseCareer startingCareer) {
         // new career
         career = startingCareer;
-        attributes = new Attributes(startingCareer.getInitialStats(), career.getGrowthRates());
+        attributes = new Attributes(startingCareer.getStartingStats(), career.getGrowthRates(), career.getStatCaps());
     }
 
     //////////////////////////////////////////////////////////////

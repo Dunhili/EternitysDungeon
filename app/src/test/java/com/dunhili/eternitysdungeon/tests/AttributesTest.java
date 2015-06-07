@@ -10,17 +10,18 @@ import junit.framework.TestCase;
 public class AttributesTest extends TestCase {
     private Attributes attributes;
     private int[] initialStats = {10, 3, 10, 8, 6, 4, 5, 2};
-    private int[] growthRates = {100, 250, 60, 40, 20, 20, 40, 20};
+    private int[] growthRates  = {100, 250, 60, 40, 20, 20, 40, 20};
+    private int[] statCaps     = {40, 40, 20, 20, 20, 20, 20, 20};
 
     /**
      * Called before every test method.
      */
     public void setUp() {
-        attributes = new Attributes(initialStats, growthRates);
+        attributes = new Attributes(initialStats, growthRates, statCaps);
     }
 
     /**
-     * Tests the {@link Attributes#Attributes(int[], int[])} constructor.
+     * Tests the {@link Attributes#Attributes(int[], int[], int[])} constructor.
      */
     public void testConstructor() {
         assertEquals(initialStats[0], attributes.getMaxHP().getValue());

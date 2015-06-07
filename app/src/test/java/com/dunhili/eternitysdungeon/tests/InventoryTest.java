@@ -3,9 +3,13 @@ package com.dunhili.eternitysdungeon.tests;
 import android.util.Log;
 
 import com.dunhili.eternitysdungeon.item.Armor;
+import com.dunhili.eternitysdungeon.item.ArmorAttributes;
+import com.dunhili.eternitysdungeon.item.ArmorType;
 import com.dunhili.eternitysdungeon.item.Inventory;
 import com.dunhili.eternitysdungeon.item.Item;
 import com.dunhili.eternitysdungeon.item.Weapon;
+import com.dunhili.eternitysdungeon.item.WeaponAttributes;
+import com.dunhili.eternitysdungeon.item.WeaponType;
 
 import junit.framework.TestCase;
 
@@ -27,7 +31,8 @@ public class InventoryTest extends TestCase {
      * Tests the {@link Inventory#removeItem(Item)} and {@link Inventory#addItem(Item)} methods.
      */
     public void testAddAndRemoveItems() {
-        Armor armor1 = new Armor("testArmor", 10, 1, 1, 1);
+        ArmorAttributes aAttr1 = new ArmorAttributes(ArmorType.LIGHT, 1, 1, 0);
+        Armor armor1 = new Armor(aAttr1, "testArmor", 10, 1);
         inventory.addItem(armor1);
         assertEquals(1, inventory.getItem(armor1).getItemCount());
         assertEquals(armor1, inventory.getItem(armor1));
@@ -36,7 +41,8 @@ public class InventoryTest extends TestCase {
         inventory.addItem(armor1);
         assertEquals(2, inventory.getItem(armor1).getItemCount());
 
-        Weapon weapon1 = new Weapon("testWeapon", 10, 2, 1, 1);
+        WeaponAttributes wAttr1 = new WeaponAttributes(WeaponType.DAGGER, 1, 1, 1, 1, 1, 1, new float[] {1.5f, 1.0f, 0.0f, 0.0f});
+        Weapon weapon1 = new Weapon(wAttr1, "testWeapon", 10, 2);
         inventory.addItem(weapon1);
         assertEquals(1, inventory.getItem(weapon1).getItemCount());
         assertEquals(weapon1, inventory.getItem(weapon1));
