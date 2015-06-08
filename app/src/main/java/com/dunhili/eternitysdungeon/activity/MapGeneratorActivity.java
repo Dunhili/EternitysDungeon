@@ -1,7 +1,9 @@
 package com.dunhili.eternitysdungeon.activity;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 
 import com.dunhili.eternitysdungeon.R;
 
@@ -13,5 +15,12 @@ public class MapGeneratorActivity extends FragmentActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.map_generator_activity);
+
+        FragmentManager manager = getSupportFragmentManager();
+        Fragment fragment = manager.findFragmentById(R.id.map_generator_container);
+        if (fragment == null) {
+            fragment = new MapGeneratorFragment();
+            manager.beginTransaction().add(R.id.map_generator_container, fragment).commit();
+        }
     }
 }

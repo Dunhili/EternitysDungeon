@@ -1,5 +1,7 @@
 package com.dunhili.eternitysdungeon.map;
 
+import com.dunhili.eternitysdungeon.utils.Logging;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +12,8 @@ public class Map {
     private static final String TAG = "Map";
 
     private Tile[][] tiles;
+    private int width;
+    private int height;
     private List<Character> enemies = new ArrayList<>();
     private List<Character> friendlyUnits = new ArrayList<>();
     private List<Character> neutralUnits = new ArrayList<>();
@@ -38,7 +42,10 @@ public class Map {
      * @param defaultTile initial starting tile for the map
      */
     public Map(int width, int height, Tile defaultTile) {
+        this.width = width;
+        this.height = height;
         tiles = new Tile[width][height];
+        Logging.debug(TAG, "Created map with size : [" + width + " x " + height + "]");
 
         for (int j = 0; j < height; j++) {
             for (int i = 0; i < width; i++) {
@@ -51,13 +58,27 @@ public class Map {
 
     }
 
+    public int getWidth() {
+        Logging.debug(TAG, "getWidth()");
+        return width;
+    }
+
+    public int getHeight() {
+        Logging.debug(TAG, "getHeight()");
+        return height;
+    }
+
     public void setTileAt(Tile tile, Position position) {
+        Logging.debug(TAG, "setTileAt()");
         setTileAt(tile, position.getX(), position.getY());
     }
 
     public void setTileAt(Tile tile, int x, int y) {
+        Logging.debug(TAG, "setTileAt(" + tile + ", " + "[" + x + "," + y + "])");
         if (inBounds(x, y)) {
             tiles[x][y] = tile;
+        } else {
+            Logging.debug(TAG, "Out of bounds at : " + "(" + x + "," + y + ")");
         }
     }
 
@@ -66,8 +87,8 @@ public class Map {
     }
 
     public Tile getTileAt(int x, int y) {
+        Logging.debug(TAG, "getTileAt([" + x + "," + y + "]");
         return (inBounds(x, y)) ? tiles[x][y] : Tile.NONE;
-
     }
 
     private boolean inBounds(int x, int y) {
