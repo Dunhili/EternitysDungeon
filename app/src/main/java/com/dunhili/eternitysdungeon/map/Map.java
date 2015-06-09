@@ -92,6 +92,6 @@ public class Map {
     }
 
     private boolean inBounds(int x, int y) {
-        return x >= 0 && x < tiles.length && y >= 0 && y <= tiles[0].length;
+        return x >= 0 && x < getWidth() && y >= 0 && y <= getHeight();
     }
 }
