@@ -1,5 +1,6 @@
 package com.dunhili.eternitysdungeon.character;
 
+import com.dunhili.eternitysdungeon.career.AdvancedCareer;
 import com.dunhili.eternitysdungeon.career.BaseCareer;
 import com.dunhili.eternitysdungeon.career.Career;
 import com.dunhili.eternitysdungeon.item.Armor;
@@ -69,22 +70,8 @@ public class Character {
         this.attributes = attributes;
     }
 
-    /**
-     * Adds the money to the current money in the inventory. Use positive values for adding money
-     * and negative values for spending money. Returns true if the amount of money to add or subtract
-     * is valid, otherwise false.
-     * @param moneyToAdd amount of money to add
-     * @return true if the amount of money to add is valid, otherwise false
-     */
-    public boolean addMoney(int moneyToAdd) {
-        int money = inventory.getMoney();
-        if (money + moneyToAdd < 0) {
-            return false;
-        }
-
-        money += moneyToAdd;
-        inventory.setMoney(money);
-        return true;
+    public Career getCareer() {
+        return career;
     }
 
     /**
@@ -141,6 +128,11 @@ public class Character {
 
     public void castSpell(Character target) {
         // TODO
+    }
+
+    public void promote(AdvancedCareer upgradedCareer) {
+        career = upgradedCareer;
+        attributes.addPromotionBonus(upgradedCareer);
     }
 
     /**

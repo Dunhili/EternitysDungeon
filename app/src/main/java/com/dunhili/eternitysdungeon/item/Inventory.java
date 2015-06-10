@@ -175,6 +175,45 @@ public class Inventory {
         }
     }
 
+    public boolean canAffordItem(Item item) {
+        return canAffordItem(item, 1);
+    }
+
+    public boolean canAffordItem(Item item, int amount) {
+        return (item.getValue() * amount) <= money;
+    }
+
+    public boolean buyItem(Item item) {
+        return buyItem(item, 1);
+    }
+
+    public boolean buyItem(Item item, int amount) {
+        if (canAffordItem(item, amount)) {
+            item.setItemCount(amount);
+            addItem(item);
+            money -= item.getValue() * amount;
+            return true;
+        }
+        return false;
+    }
+
+    public boolean sellItem(Item item) {
+        return sellItem(item, 1);
+    }
+
+    public boolean sellItem(Item item, int amount) {
+        if (items.contains(item)) {
+            int numItems = items.get(items.indexOf(item)).getItemCount();
+            if (numItems < amount) {
+                amount = numItems;
+            }
+            removeItem(item, amount);
+            money += item.getValue() * amount;
+            return true;
+        }
+        return false;
+    }
+
     /**
      * Returns the item in the inventory that equals the given item if it's found, otherwise
      * returns null.

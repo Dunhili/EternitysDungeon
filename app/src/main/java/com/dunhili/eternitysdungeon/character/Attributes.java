@@ -1,5 +1,6 @@
 package com.dunhili.eternitysdungeon.character;
 
+import com.dunhili.eternitysdungeon.career.AdvancedCareer;
 import com.dunhili.eternitysdungeon.utils.StatCalculator;
 
 import java.util.Random;
@@ -192,6 +193,23 @@ public class Attributes {
     public void setExperienceValue(int experienceValue) {
         if (experienceValue >= 0) {
             this.experienceValue = experienceValue;
+        }
+    }
+
+    /**
+     * Adds the bonuses from upgraded the career to the stats.
+     * @param upgradedCareer career that has the new growth rates, stat caps, and promotion bonus
+     */
+    public void addPromotionBonus(AdvancedCareer upgradedCareer) {
+        StatType[] listOfStats = StatType.values();
+        int[] promotionBonus = upgradedCareer.getPromotionBonus();
+        int[] newGrowthRates = upgradedCareer.getGrowthRates();
+        int[] newStatCaps = upgradedCareer.getStatCaps();
+        for (int i = 0; i < listOfStats.length; i++) {
+            int currIndex = listOfStats[i].getIndex();
+            stats[currIndex].setValue(stats[currIndex].getValue() + promotionBonus[currIndex]);
+            stats[currIndex].setGrowthRate(newGrowthRates[currIndex]);
+            stats[currIndex].setCap(newStatCaps[currIndex]);
         }
     }
 
