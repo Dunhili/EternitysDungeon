@@ -10,7 +10,7 @@ import com.dunhili.eternitysdungeon.R;
 /**
  * Created by Dunhili on 6/7/2015.
  */
-public class MapGeneratorActivity extends FragmentActivity {
+public class MapEditorActivity extends FragmentActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,7 +19,7 @@ public class MapGeneratorActivity extends FragmentActivity {
         FragmentManager manager = getSupportFragmentManager();
         Fragment fragment = manager.findFragmentById(R.id.map_generator_container);
         if (fragment == null) {
-            fragment = new MapGeneratorFragment();
+            fragment = new MapEditorFragment();
             manager.beginTransaction().add(R.id.map_generator_container, fragment).commit();
         }
     }

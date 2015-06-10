@@ -1,24 +1,20 @@
 package com.dunhili.eternitysdungeon.map;
 
-import android.view.MotionEvent;
-
-import com.dunhili.eternitysdungeon.utils.Logging;
-
 /**
  * Created by Dunhili on 5/27/2015.
  */
-public class MapGenerator {
-    private static final String TAG = "MapGenerator";
+public class MapEditor {
+    private static final String TAG = "MapEditor";
 
     private Map map;
     private Tile defaultTile = Tile.PLAINS;
     private Tile currentTile = Tile.PLAINS;
 
-    public MapGenerator() {
+    public MapEditor() {
         this(10, 10);
     }
 
-    public MapGenerator(int width, int height) {
+    public MapEditor(int width, int height) {
         createMap(width, height);
     }
 

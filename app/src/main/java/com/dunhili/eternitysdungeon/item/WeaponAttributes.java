@@ -14,7 +14,7 @@ public class WeaponAttributes {
 
     private WeaponType weaponType = WeaponType.UNARMED;
     private int physicalAttack = 0;
-    private int magicAttack = 0;
+    private int magicAttack    = 0;
     private int minRange       = 1;
     private int maxRange       = 1;
     private int critModifier   = 1;

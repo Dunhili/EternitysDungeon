@@ -7,18 +7,18 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.dunhili.eternitysdungeon.R;
-import com.dunhili.eternitysdungeon.map.MapGenerator;
+import com.dunhili.eternitysdungeon.map.MapEditor;
 
 /**
  * Created by Dunhili on 6/7/2015.
  */
-public class MapGeneratorFragment extends Fragment {
-    private MapGenerator mGenerator;
+public class MapEditorFragment extends Fragment {
+    private MapEditor mGenerator;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mGenerator = new MapGenerator();
+        mGenerator = new MapEditor();
     }
 
     @Override

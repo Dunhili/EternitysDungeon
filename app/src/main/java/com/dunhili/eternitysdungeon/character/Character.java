@@ -6,6 +6,7 @@ import com.dunhili.eternitysdungeon.item.Armor;
 import com.dunhili.eternitysdungeon.item.Inventory;
 import com.dunhili.eternitysdungeon.item.Item;
 import com.dunhili.eternitysdungeon.item.Weapon;
+import com.dunhili.eternitysdungeon.item.WeaponAttributes;
 import com.dunhili.eternitysdungeon.map.Position;
 
 import java.util.List;
@@ -27,7 +28,7 @@ public class Character {
     private Inventory inventory = new Inventory();
     private Weapon equippedWeapon = null;
     private Armor equippedArmor = null;
-    private Item equppedOffHand = null;
+    private Item equippedOffHand = null;
     private Position currentPosition;
 
     //////////////////////////////////////////////////////////////
@@ -94,7 +95,11 @@ public class Character {
         if (equippedWeapon == null) {
             return attributes.getStrength().getValue();
         } else {
-            return equippedWeapon.getWeaponAttr().getPhysicalAttack();
+            WeaponAttributes attr = equippedWeapon.getWeaponAttr();
+            float damage = attr.getPhysicalAttack();
+            damage += (attr.getStrengthScaling() * getAttributes().getStrength().getValue());
+            damage += (attr.getDexterityScaling() * getAttributes().getDexterity().getValue());
+            return (int) damage;
         }
     }
 
@@ -102,24 +107,32 @@ public class Character {
         if (equippedWeapon == null) {
             return attributes.getIntelligence().getValue();
         } else {
-            return equippedWeapon.getWeaponAttr().getMagicAttack();
+            WeaponAttributes attr = equippedWeapon.getWeaponAttr();
+            float damage = attr.getMagicAttack();
+            damage += (attr.getIntelligenceScaling() * getAttributes().getIntelligence().getValue());
+            damage += (attr.getWillpowerScaling() * getAttributes().getWillpower().getValue());
+            return (int) damage;
         }
     }
 
     public int getPhysicalDefense() {
-        if (equippedArmor == null) {
-            return attributes.getDefense().getValue();
-        } else {
-            return equippedArmor.getArmorAttr().getPhysicalDefense() + attributes.getDefense().getValue();
+        int defense = attributes.getDefense().getValue();
+        if (equippedArmor != null) {
+            defense += equippedArmor.getArmorAttr().getPhysicalDefense();
+        } else if (equippedOffHand instanceof Armor) {
+            defense += ((Armor) equippedOffHand).getArmorAttr().getPhysicalDefense();
         }
+        return defense;
     }
 
     public int getSpellDefense() {
-        if (equippedArmor == null) {
-            return attributes.getResistance().getValue();
-        } else {
-            return equippedArmor.getArmorAttr().getMagicDefense() + attributes.getResistance().getValue();
+        int resistance = attributes.getResistance().getValue();
+        if (equippedArmor != null) {
+            resistance += equippedArmor.getArmorAttr().getMagicDefense();
+        } else if (equippedOffHand instanceof Armor) {
+            resistance += ((Armor) equippedOffHand).getArmorAttr().getMagicDefense();
         }
+        return resistance;
     }
 
     public void attack(Character target) {
