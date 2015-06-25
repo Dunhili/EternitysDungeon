@@ -7,24 +7,37 @@ import java.util.Arrays;
 import java.util.Random;
 
 /**
+ * Contains utility methods related to character stats.
  * Created by Dunhili on 5/27/2015.
  */
 public class StatCalculator {
     private static Random rand = new Random();
 
+    /**
+     * Increases the stats based on their respective growth rates. A random number is generated and is checked to see if
+     * it is lower than the growth rate and increments the stat if is. Stats that have growth rates higher than 100%
+     * can be raised multiple times. 
+     * @param stats list of stats to increase
+     * @return stats after they have been improved
+     */
     public static Stat[] levelUp(Stat[] stats) {
         for (Stat stat : stats) {
-            stat.setValue(calculateStat(stat));
+            stat.setValue(calculateStatLevelUp(stat));
         }
         return stats;
     }
 
-    public static int calculateStat(Stat stat) {
+    /**
+     * Levels up the given stat based on its growth rate.
+     * @param stat stat to level up
+     * @return new value of the stat
+     */
+    private static int calculateStatLevelUp(Stat stat) {
         int growthRate = stat.getGrowthRate();
         int statValue = stat.getValue();
         while (growthRate > 0) {
             int roll = rand.nextInt(100) + 1;
-            if (roll <= growthRate) {
+            if (roll <= growthRate && statValue < stat.getCap()) {
                 ++statValue;
             }
             growthRate -= 100;
