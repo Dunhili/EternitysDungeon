@@ -50,7 +50,7 @@ Tinkerer
 
            Sword Master -> Sword Saint
 Myrmidon
-           Spell Sword  -> Mage Knight
+           Spell Sword  -> Mystic Blade
 
 
            Alchemist    -> Thaumaturge
@@ -66,3 +66,19 @@ Monk
            Pirate       -> Captain
 Bandit
            Marauder     -> Conqueror
+
+
+           Diviner      -> Oracle
+Seer
+           Psychic      -> Prophet
+
+
+           Elementalist -> Atmosmancer
+Shaman
+           Witch Doctor -> Spiritualist
+
+
+LATER:
+ * Gladiator
+ * Samurai
+ * Ninja
