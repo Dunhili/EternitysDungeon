@@ -11,7 +11,7 @@ public class Weapon extends Item {
     private WeaponAttributes weaponAttr;
 
     public Weapon(WeaponAttributes weaponAttr, String name, int value, int id) {
-        super(name, value, id, 1);
+        super(name, value, id);
         this.weaponAttr = weaponAttr;
     }
 
@@ -23,10 +23,5 @@ public class Weapon extends Item {
     public Item clone() {
         Item weapon = new Weapon(getWeaponAttr(), getName(), getValue(), getId());
         return weapon;
-    }
-
-    @Override
-    public void use() {
-        return;
     }
 }

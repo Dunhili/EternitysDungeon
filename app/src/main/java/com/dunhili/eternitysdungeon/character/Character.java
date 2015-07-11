@@ -130,6 +130,14 @@ public class Character {
         // TODO
     }
 
+    public void heal(int healAmount) {
+        attributes.setCurrentHP(attributes.getCurrentHP() + healAmount);
+    }
+
+    public void damage(int damageAmount) {
+        attributes.setCurrentHP(attributes.getCurrentHP() - damageAmount);
+    }
+
     public void promote(AdvancedCareer upgradedCareer) {
         career = upgradedCareer;
         attributes.addPromotionBonus(upgradedCareer);

@@ -6,23 +6,21 @@ package com.dunhili.eternitysdungeon.item;
 public class WeaponAttributes {
     private static final String TAG = "WeaponAttributes";
 
-    private static final int NUM_OFFENSIVE_STATS = 4;
-    private static final int STRENGTH_SCALING = 0;
-    private static final int DEXTERITY_SCALING = 1;
-    private static final int INTELLIGENCE_SCALING = 2;
-    private static final int WILLPOWER_SCALING = 3;
-
     private WeaponType weaponType = WeaponType.UNARMED;
-    private int physicalAttack = 0;
-    private int magicAttack    = 0;
-    private int minRange       = 1;
-    private int maxRange       = 1;
-    private int critModifier   = 1;
-    private int speedModifier  = 1;
-    private float[] weaponScaling = new float[NUM_OFFENSIVE_STATS];
+    private int physicalAttack        = 0;
+    private int magicAttack           = 0;
+    private int minRange              = 1;
+    private int maxRange              = 1;
+    private int critModifier          = 1;
+    private int speedModifier         = 1;
+    private float strengthScaling     = 0.0f;
+    private float dexterityScaling    = 0.0f;
+    private float intelligenceScaling = 0.0f;
+    private float wisdomScaling       = 0.0f;
 
     public WeaponAttributes(WeaponType weaponType, int physicalAttack, int magicAttack, int minRange,
-                            int maxRange, int critModifier, int speedModifier, float[] weaponScaling) {
+                            int maxRange, int critModifier, int speedModifier, float strengthScaling,
+                            float dexterityScaling, float intelligenceScaling, float wisdomScaling) {
         this.weaponType = weaponType;
         this.physicalAttack = physicalAttack;
         this.magicAttack = magicAttack;
@@ -30,7 +28,10 @@ public class WeaponAttributes {
         this.maxRange = maxRange;
         this.critModifier = critModifier;
         this.speedModifier = speedModifier;
-        System.arraycopy(weaponScaling, 0, this.weaponScaling, 0, weaponScaling.length);
+        this.strengthScaling = strengthScaling;
+        this.dexterityScaling = dexterityScaling;
+        this.intelligenceScaling = intelligenceScaling;
+        this.wisdomScaling = wisdomScaling;
     }
 
     public WeaponType getWeaponType() { return weaponType; }
@@ -49,11 +50,11 @@ public class WeaponAttributes {
         return speedModifier;
     }
 
-    public float getStrengthScaling() { return weaponScaling[STRENGTH_SCALING]; }
+    public float getStrengthScaling() { return strengthScaling; }
 
-    public float getDexterityScaling() { return weaponScaling[DEXTERITY_SCALING]; }
+    public float getDexterityScaling() { return dexterityScaling; }
 
-    public float getIntelligenceScaling() { return weaponScaling[INTELLIGENCE_SCALING]; }
+    public float getIntelligenceScaling() { return intelligenceScaling; }
 
-    public float getWillpowerScaling() { return weaponScaling[WILLPOWER_SCALING]; }
+    public float getWillpowerScaling() { return wisdomScaling; }
 }

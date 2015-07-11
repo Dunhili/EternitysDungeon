@@ -1,8 +1,11 @@
 package com.dunhili.eternitysdungeon.item;
 
+import com.dunhili.eternitysdungeon.map.Tile;
 import com.dunhili.eternitysdungeon.utils.Logging;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -16,7 +19,7 @@ public class Inventory {
     //////////////////////////////////////////////////////////////
     private static final String TAG = "Inventory";
 
-    private List<Item> items;
+    private HashMap<Item, Integer> items;
     private int money = 0;
 
     //////////////////////////////////////////////////////////////
@@ -27,14 +30,7 @@ public class Inventory {
      * Default constructor, creates an inventory of default size.
      */
     public Inventory() {
-        this(10);
-    }
-
-    /**
-     * Comprehensive constructor, creates an inventory of the give size.
-     */
-    public Inventory(int initialCapacity) {
-        items = new ArrayList<>(initialCapacity);
+        items = new HashMap<>();
     }
 
     /**
@@ -50,18 +46,27 @@ public class Inventory {
     //////////////////////////////////////////////////////////////
 
     /**
-     * Adds the given item to the inventory. If the item is in the inventory, adds the item's count
-     * to the count of the item in the inventory.
+     * Adds 1 count of the given item to the inventory.
      * @param item item to add
+     * @return true if the item was successfully added, otherwise false
      */
-    public void addItem(Item item) {
-        Logging.debug(TAG, "addItem(" + item.getName() + ")");
-        int index = items.indexOf(item);
-        if (index != -1) {
-            items.get(index).addCount(item.getItemCount());
+    public boolean addItem(Item item) {
+        return addItem(item, 1);
+    }
+
+    /**
+     * Adds the count of given item to the inventory.
+     * @param item item to add
+     * @return true if the item was successfully added, otherwise false
+     */
+    public boolean addItem(Item item, int amount) {
+        Logging.debug(TAG, "addItem(" + item.getName() + ", " + amount + ")");
+        if (items.containsKey(item)) {
+            items.put(item, items.get(item) + amount);
         } else {
-            items.add(item);
+            items.put(item, amount);
         }
+        return true;
     }
 
     /**
@@ -72,7 +77,11 @@ public class Inventory {
      */
     public boolean removeItem(Item item) {
         Logging.debug(TAG, "removeItem(" + item.getName() + ")");
-        return removeItem(item, item.getItemCount());
+        if (items.containsKey(item)) {
+            items.remove(item);
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -85,13 +94,12 @@ public class Inventory {
      */
     public boolean removeItem(Item item, int amountToRemove) {
         Logging.debug(TAG, "removeItem(" + item.getName() + ", " + amountToRemove + ")");
-        int index = items.indexOf(item);
-        if (index != -1) {
-            Item itemToRemove = items.get(index);
-            if (amountToRemove >= itemToRemove.getItemCount()) {
-                items.remove(index);
+        if (items.containsKey(item)) {
+            int itemCount = items.get(item);
+            if (amountToRemove >= itemCount) {
+                items.remove(item);
             } else {
-                itemToRemove.addCount(-amountToRemove);
+                items.put(item, items.get(item) - amountToRemove);
             }
             return true;
         }
@@ -99,20 +107,17 @@ public class Inventory {
     }
 
     /**
-     * Uses the given item. If it's a consumable item, then also decrements its count.
+     * Uses the given item. If it's a consumable item, then also decrements its count. Returns
+     * true if the item was successfully used, otherwise returns false.
      * @param item item to use
+     * @return true if the item was used, otherwise false
      */
     public boolean useItem(Item item) {
         Logging.debug(TAG, "useItem(" + item.getName() + ")");
-        int index = items.indexOf(item);
-        if (index != -1) {
-            Item itemToUse = items.get(index);
-            itemToUse.use();
-            if (itemToUse.isConsumable()) {
-                itemToUse.decreaseCount();
-                if (itemToUse.getItemCount() == 0) {
-                    items.remove(index);
-                }
+        if (items.containsKey(item)) {
+            item.use();
+            if (item.isConsumable()) {
+                removeItem(item, 1);
             }
             return true;
         }
@@ -120,31 +125,51 @@ public class Inventory {
     }
 
     /**
-     * Returns the item at the given index if it's found, otherwise returns null.
-     * @param index index to return the item at
-     * @return item if it's found, or null if not found
+     * Uses the given item on the target character. If it's a consumable item, then also decrements
+     * its count. Returns true if the item was successfully used, otherwise returns false.
+     * @param item item to use
+     * @param target target character to use the item on
+     * @return true if the item was used, otherwise false
      */
-    public Item getItemByIndex(int index) {
-        Logging.debug(TAG, "getItemByIndex(" + index + ")");
-        if (index < 0 || index >= items.size()) {
-            return null;
+    public boolean useItem(Item item, com.dunhili.eternitysdungeon.character.Character target) {
+        Logging.debug(TAG, "useItem(" + item.getName() + ", " + target + ")");
+        if (items.containsKey(item)) {
+            item.use(target);
+            if (item.isConsumable()) {
+                removeItem(item, 1);
+            }
+            return true;
         }
-        return items.get(index);
+        return false;
     }
 
     /**
-     * Returns the item that matches the given ID if it's in the inventory, otherwise returns null.
-     * @param id ID to search for
-     * @return item that matches the ID if it's in the inventory, otherwise null
+     * Uses the given item on the target area. If it's a consumable item, then also decrements its
+     * count. Returns true if the item was successfully used, otherwise returns false.
+     * @param item item to use
+     * @param targetArea target area to use the item on
+     * @return true if the item was used, otherwise false
      */
-    public Item getItemByID(int id) {
-        Logging.debug(TAG, "getItemByID(" + id + ")");
-        for (Item item : items) {
-            if (item.getId() == id) {
-                return item;
+    public boolean useItem(Item item, Tile targetArea) {
+        Logging.debug(TAG, "useItem(" + item.getName() + ", " + targetArea + ")");
+        if (items.containsKey(item)) {
+            item.use(targetArea);
+            if (item.isConsumable()) {
+                removeItem(item, 1);
             }
+            return true;
         }
-        return null;
+        return false;
+    }
+
+    /**
+     * Returns the number of a given item if it's in the inventory, otherwise returns 0.
+     * @param item item to get the count of
+     * @return number of a given item or 0
+     */
+    public int getItemCount(Item item) {
+        Logging.debug(TAG, "getItemCount(" + item.getName() + ")");
+        return items.containsKey(item) ? items.get(item) : 0;
     }
 
     /**
@@ -189,8 +214,7 @@ public class Inventory {
 
     public boolean buyItem(Item item, int amount) {
         if (canAffordItem(item, amount)) {
-            item.setItemCount(amount);
-            addItem(item);
+            addItem(item, amount);
             money -= item.getValue() * amount;
             return true;
         }
@@ -202,11 +226,7 @@ public class Inventory {
     }
 
     public boolean sellItem(Item item, int amount) {
-        if (items.contains(item)) {
-            int numItems = items.get(items.indexOf(item)).getItemCount();
-            if (numItems < amount) {
-                amount = numItems;
-            }
+        if (items.containsKey(item) && items.get(item) >= amount) {
             removeItem(item, amount);
             money += item.getValue() * amount;
             return true;
@@ -214,16 +234,6 @@ public class Inventory {
         return false;
     }
 
-    /**
-     * Returns the item in the inventory that equals the given item if it's found, otherwise
-     * returns null.
-     * @param itemToFind item to search for in the list
-     * @return item if it's found, otherwise null
-     */
-    public Item getItem(Item itemToFind) {
-        Logging.debug(TAG, "getItem(" + itemToFind.getName() + ")");
-        return getItemByID(itemToFind.getId());
-    }
 
     /**
      * Returns a cloned list of items.
@@ -231,11 +241,7 @@ public class Inventory {
      */
     public List<Item> getItems() {
         Logging.debug(TAG, "getItems()");
-        List<Item> clonedItems = new ArrayList<>();
-        for (Item item : items) {
-            clonedItems.add(item.clone());
-        }
-        return clonedItems;
+        return new ArrayList<>(items.keySet());
     }
 
     /**
@@ -253,10 +259,11 @@ public class Inventory {
      * Sorts the list of items by ID and returns the sorted inventory.
      * @return sorted inventory
      */
-    public Inventory sortInventory() {
+    public List<Item> getSortedInventory() {
         Logging.debug(TAG, "sortInventory()");
-        Arrays.sort(items.toArray());
-        return this;
+        List<Item> itemsToSort = getItems();
+        Collections.sort(itemsToSort);
+        return itemsToSort;
     }
 
     /**

@@ -19,7 +19,7 @@ public class Armor extends Item {
      * @param id unique ID for the armor
      */
     public Armor(ArmorAttributes armorAttr, String name, int value, int id) {
-        super(name, value, id, 1);
+        super(name, value, id);
         this.armorAttr = armorAttr;
     }
 
@@ -41,14 +41,5 @@ public class Armor extends Item {
         Logging.debug(TAG, "clone()");
         Item armor = new Armor(getArmorAttr(), getName(), getValue(), getId());
         return armor;
-    }
-
-    /**
-     * Uses the armor, if the armor is listed as consumable, then it is destroyed afterward.
-     */
-    @Override
-    public void use() {
-        Logging.debug(TAG, "use()");
-        return;
     }
 }

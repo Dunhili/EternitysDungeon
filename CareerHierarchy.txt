@@ -1,4 +1,4 @@
-           Warrior      -> Hero
+           Warrior      -> Gladiator
 Fighter
            Barbarian    -> Berserker
 
@@ -50,7 +50,7 @@ Tinkerer
 
            Sword Master -> Sword Saint
 Myrmidon
-           Spell Sword  -> Mystic Blade
+           Spell Blade  -> Mystic Blade
 
 
            Alchemist    -> Thaumaturge
@@ -79,6 +79,5 @@ Shaman
 
 
 LATER:
- * Gladiator
  * Samurai
  * Ninja

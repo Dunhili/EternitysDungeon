@@ -2,6 +2,9 @@ package com.dunhili.eternitysdungeon.item;
 
 import android.media.Image;
 
+import com.dunhili.eternitysdungeon.character.*;
+import com.dunhili.eternitysdungeon.map.Tile;
+
 /**
  * Represents an item that can be used or worn by the characters.
  * Created by Dunhili on 5/23/2015.
@@ -18,7 +21,6 @@ public abstract class Item implements Comparable<Item>, Cloneable {
 
     private int value     = 0;
     private int id        = 0;
-    private int itemCount = 1;
 
     private Image portrait;
 
@@ -35,18 +37,7 @@ public abstract class Item implements Comparable<Item>, Cloneable {
      * @param id item ID
      */
     public Item(String name, int value, int id) {
-        this(name, value, id, 1);
-    }
-
-    /**
-     * Creates an item with the given value, ID, and item count.
-     * @param name name of the item
-     * @param value item's value (in gp)
-     * @param id item ID
-     * @param itemCount count of the item
-     */
-    public Item(String name, int value, int id, int itemCount) {
-        this(name, value, id, itemCount, false);
+        this(name, value, id, true);
     }
 
     /**
@@ -54,14 +45,12 @@ public abstract class Item implements Comparable<Item>, Cloneable {
      * @param name name of the item
      * @param value item's value (in gp)
      * @param id item ID
-     * @param itemCount count of the item
      * @param consumable flag for whether the item is removed on use
      */
-    public Item(String name, int value, int id, int itemCount, boolean consumable) {
+    public Item(String name, int value, int id, boolean consumable) {
         this.name = name;
         this.value = value;
         this.id = id;
-        this.itemCount = itemCount;
         this.consumable = consumable;
     }
 
@@ -82,24 +71,6 @@ public abstract class Item implements Comparable<Item>, Cloneable {
     public int getId() { return id; }
 
     /**
-     * Returns the item count.
-     * @return item count
-     */
-    public int getItemCount() {
-        return itemCount;
-    }
-
-    /**
-     * Sets the item count to the given value
-     * @param itemCount number of items
-     */
-    public void setItemCount(int itemCount) {
-        if (itemCount >= 0) {
-            this.itemCount = itemCount;
-        }
-    }
-
-    /**
      * Returns the flag for whether the item is consumed on use.
      * @return consumable flag
      */
@@ -112,37 +83,6 @@ public abstract class Item implements Comparable<Item>, Cloneable {
     public String getName() { return name; }
 
     public Image getPortrait() { return portrait; }
-
-    /**
-     * Adds the count to the item count.
-     * @param count amount of items to add
-     */
-    public void addCount(int count) {
-        itemCount += count;
-        if (itemCount > MAX_ITEM_COUNT) {
-            itemCount = MAX_ITEM_COUNT;
-        } else if (itemCount < 0) {
-            itemCount = 0;
-        }
-    }
-
-    /**
-     * Increments the item count.
-     */
-    public void increaseCount() {
-        if (itemCount < MAX_ITEM_COUNT) {
-            ++itemCount;
-        }
-    }
-
-    /**
-     * Decrements the item count.
-     */
-    public void decreaseCount() {
-        if (itemCount > 0) {
-            --itemCount;
-        }
-    }
 
     /**
      * Returns a positive number if the other ID is higher, a negative number if this ID is higher
@@ -174,19 +114,49 @@ public abstract class Item implements Comparable<Item>, Cloneable {
     }
 
     /**
+     * Returns the hash code for this item. The hash code is merely the item's ID number.
+     * @return hash code of the item, ie. the item's ID
+     */
+    @Override
+    public int hashCode() {
+        return id;
+    }
+
+    /**
      * Creates a copy of the current item and returns it.
      * @return copy of the item
      */
     public abstract Item clone();
 
-    public abstract void use();
+    /**
+     * General use method that doesn't have some kind of target.
+     */
+    public void use() {
+        // should be overridden by any item that needs it
+    }
+
+    /**
+     * Use method that targets a single character.
+     * @param target character to target with this item
+     */
+    public void use(com.dunhili.eternitysdungeon.character.Character target) {
+        // should be overridden by any item that needs it
+    }
+
+    /**
+     * Use method that targets an area.
+     * @param targetArea area to target with this item
+     */
+    public void use(Tile targetArea) {
+        // should be overridden by any item that needs it
+    }
 
     /**
      * Returns a String representation of the Item.
-     * @return String reprensetation of the Item
+     * @return String representation of the Item
      */
     @Override
     public String toString() {
-        return getName() + " (" + getId() + ") - " + getItemCount();
+        return getName() + " (" + getId() + ")";
     }
 }

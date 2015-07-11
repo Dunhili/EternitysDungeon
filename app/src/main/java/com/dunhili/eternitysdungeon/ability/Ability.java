@@ -75,7 +75,7 @@ public class Ability {
      * Returns the flag for whether this ability can target enemy units.
      * @return flag for if this target enemies
      */
-    public boolean isTargetEnemies() {
+    public boolean canTargetEnemies() {
         return targetEnemies;
     }
 
@@ -84,7 +84,7 @@ public class Ability {
      * @return flag for if this targets allies
      * 
      */
-    public boolean isTargetAllies() {
+    public boolean canTargetAllies() {
         return targetAllies;
     }
 
