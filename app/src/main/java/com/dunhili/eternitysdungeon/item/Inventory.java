@@ -1,9 +1,9 @@
 package com.dunhili.eternitysdungeon.item;
 
+import com.dunhili.eternitysdungeon.character.Entity;
 import com.dunhili.eternitysdungeon.map.Tile;
 import com.dunhili.eternitysdungeon.utils.Logging;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -131,7 +131,7 @@ public class Inventory {
      * @param target target character to use the item on
      * @return true if the item was used, otherwise false
      */
-    public boolean useItem(Item item, com.dunhili.eternitysdungeon.character.Character target) {
+    public boolean useItem(Item item, Entity target) {
         Logging.debug(TAG, "useItem(" + item.getName() + ", " + target + ")");
         if (items.containsKey(item)) {
             item.use(target);

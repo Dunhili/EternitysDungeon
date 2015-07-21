@@ -9,19 +9,19 @@ public class ItemSet {
     // Item IDs 0-99 are consumable items
     public static final Consumable LIGHT_POTION_OF_HEALING = new Consumable("Light Potion of Healing", 2, 0) {
         @Override
-        public void use(com.dunhili.eternitysdungeon.character.Character target) {
+        public void use(Entity target) {
             target.heal(10);
         }
     };
     public static final Consumable POTION_OF_HEALING = new Consumable("Potion of Healing", 8, 1) {
         @Override
-        public void use(com.dunhili.eternitysdungeon.character.Character target) {
+        public void use(Entity target) {
             target.heal(20);
         }
     };
     public static final Consumable HEAVY_POTION_OF_HEALING = new Consumable("Heavy Potion of Healing", 18, 2) {
         @Override
-        public void use(com.dunhili.eternitysdungeon.character.Character target) {
+        public void use(Entity target) {
             target.heal(40);
         }
     };

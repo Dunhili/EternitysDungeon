@@ -139,7 +139,7 @@ public abstract class Item implements Comparable<Item>, Cloneable {
      * Use method that targets a single character.
      * @param target character to target with this item
      */
-    public void use(com.dunhili.eternitysdungeon.character.Character target) {
+    public void use(Entity target) {
         // should be overridden by any item that needs it
     }
 

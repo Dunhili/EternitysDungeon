@@ -17,11 +17,11 @@ import java.util.List;
  * as vendors, commoners, etc., playable characters (PCs), and enemies.
  * Created by Dunhili on 5/23/2015.
  */
-public class Character {
+public class Entity {
     //////////////////////////////////////////////////////////////
     // FIELDS
     //////////////////////////////////////////////////////////////
-    private static final String TAG = "Character";
+    private static final String TAG = "Entity";
 
     private Attributes attributes;
     private Career career;
@@ -36,7 +36,7 @@ public class Character {
     // CONSTRUCTORS
     //////////////////////////////////////////////////////////////
 
-    public Character(BaseCareer startingCareer) {
+    public Entity(BaseCareer startingCareer) {
         // new career
         career = startingCareer;
         attributes = new Attributes(startingCareer.getStartingStats(), career.getGrowthRates(), career.getStatCaps());
@@ -122,16 +122,36 @@ public class Character {
         return resistance;
     }
 
-    public void attack(Character target) {
+    public void attack(Entity target) {
         // TODO
     }
 
-    public void castSpell(Character target) {
+    public void castSpell(Entity target) {
         // TODO
+    }
+
+    public boolean useMana(int manaCost) {
+        if (attributes.getCurrentMana() >= manaCost) {
+            attributes.setCurrentMana(attributes.getCurrentMana() - manaCost);
+            return true;
+        }
+        return false;
+    }
+
+    public void restoreMana(int manaToRestore) {
+        attributes.setCurrentMana(attributes.getCurrentMana() + manaToRestore);
     }
 
     public void heal(int healAmount) {
         attributes.setCurrentHP(attributes.getCurrentHP() + healAmount);
+    }
+
+    public boolean useHealth(int healthCost) {
+        if (attributes.getCurrentHP() >= healthCost) {
+            attributes.setCurrentHP(attributes.getCurrentHP() - healthCost);
+            return true;
+        }
+        return false;
     }
 
     public void damage(int damageAmount) {

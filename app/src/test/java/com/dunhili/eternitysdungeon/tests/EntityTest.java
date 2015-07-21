@@ -1,21 +1,21 @@
 package com.dunhili.eternitysdungeon.tests;
 
-import com.dunhili.eternitysdungeon.career.BaseCareer;
 import com.dunhili.eternitysdungeon.career.BaseCareerSet;
-import com.dunhili.eternitysdungeon.character.Character;
+import com.dunhili.eternitysdungeon.character.Entity;
+
 import junit.framework.TestCase;
 
 /**
- * Tests the {@link Character} class.
+ * Tests the {@link Entity} class.
  */
-public class CharacterTest extends TestCase {
-    private Character character;
+public class EntityTest extends TestCase {
+    private Entity entity;
 
     /**
      * Called before every test method.
      */
     public void setUp() {
-        character = new Character(BaseCareerSet.FIGHTER);
+        entity = new Entity(BaseCareerSet.FIGHTER);
     }
 
     public void testWeaponCalculations() {

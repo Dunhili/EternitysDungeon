@@ -1,5 +1,6 @@
 package com.dunhili.eternitysdungeon.map;
 
+import com.dunhili.eternitysdungeon.character.Entity;
 import com.dunhili.eternitysdungeon.utils.Logging;
 
 import java.util.ArrayList;
@@ -14,9 +15,9 @@ public class Map {
     private Tile[][] tiles;
     private int width;
     private int height;
-    private List<Character> enemies = new ArrayList<>();
-    private List<Character> friendlyUnits = new ArrayList<>();
-    private List<Character> neutralUnits = new ArrayList<>();
+    private List<Entity> enemies = new ArrayList<>();
+    private List<Entity> friendlyUnits = new ArrayList<>();
+    private List<Entity> neutralUnits = new ArrayList<>();
 
     /**
      * Creates a new Map of size width x width.
