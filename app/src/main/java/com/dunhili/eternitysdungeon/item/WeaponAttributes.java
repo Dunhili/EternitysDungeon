@@ -7,6 +7,7 @@ public class WeaponAttributes {
     private static final String TAG = "WeaponAttributes";
 
     private WeaponType weaponType = WeaponType.UNARMED;
+    private int accuracy              = 100;
     private int physicalAttack        = 0;
     private int magicAttack           = 0;
     private int minRange              = 1;
@@ -18,10 +19,11 @@ public class WeaponAttributes {
     private float intelligenceScaling = 0.0f;
     private float wisdomScaling       = 0.0f;
 
-    public WeaponAttributes(WeaponType weaponType, int physicalAttack, int magicAttack, int minRange,
+    public WeaponAttributes(WeaponType weaponType, int accuracy, int physicalAttack, int magicAttack, int minRange,
                             int maxRange, int critModifier, int speedModifier, float strengthScaling,
                             float dexterityScaling, float intelligenceScaling, float wisdomScaling) {
         this.weaponType = weaponType;
+        this.accuracy = accuracy;
         this.physicalAttack = physicalAttack;
         this.magicAttack = magicAttack;
         this.minRange = minRange;
@@ -35,6 +37,10 @@ public class WeaponAttributes {
     }
 
     public WeaponType getWeaponType() { return weaponType; }
+
+    public int getAccuracy() {
+        return accuracy;
+    }
 
     public int getPhysicalAttack() { return physicalAttack; }
 

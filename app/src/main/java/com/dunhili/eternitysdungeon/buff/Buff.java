@@ -1,12 +1,16 @@
 package com.dunhili.eternitysdungeon.buff;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Represents the buffs and debuffs that can be applied to an {@link com.dunhili.eternitysdungeon.character.Entity}.
  * These effects range from stunning or poisoning a target to boosting their defense.
  * Created by Dunhili on 7/21/2015.
  */
 public class Buff {
-    private StatusCondition condition;
+    private List<StatusCondition> conditions = new ArrayList<>();
     private String name         = "";
     private int duration        = 1;
     private int potency         = 1;
@@ -26,7 +30,22 @@ public class Buff {
      */
     public Buff(StatusCondition condition, String name, int duration, int potency,
                 boolean dispellable, boolean isBuff, boolean isDebuff) {
-        this.condition = condition;
+        this(new ArrayList<StatusCondition>(Arrays.asList(condition)), name, duration, potency, dispellable, isBuff, isDebuff);
+    }
+
+    /**
+     * Creates a buff with the given set of {@link StatusCondition} and values.
+     * @param conditions list of status conditions to set for this buff
+     * @param name name of the buff
+     * @param duration number of turns this buff lasts
+     * @param potency how strong the buff is
+     * @param dispellable flag for whether this buff can be dispelled
+     * @param isBuff flag for whether this is a buff (positive for the target)
+     * @param isDebuff flag for whether this is a debuff (negative for the target)
+     */
+    public Buff(List<StatusCondition> conditions, String name, int duration, int potency,
+                boolean dispellable, boolean isBuff, boolean isDebuff) {
+        conditions.addAll(conditions);
         this.name = name;
         this.duration = duration;
         this.potency = potency;
@@ -36,11 +55,11 @@ public class Buff {
     }
 
     /**
-     * Returns the status condition enumerated type.
-     * @return status condition
+     * Returns the list of status conditions.
+     * @return list of status conditions
      */
-    public StatusCondition getCondition() {
-        return condition;
+    public List<StatusCondition> getConditions() {
+        return conditions;
     }
 
     /**

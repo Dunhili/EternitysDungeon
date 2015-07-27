@@ -1,5 +1,9 @@
 package com.dunhili.eternitysdungeon.character;
 
+import com.dunhili.eternitysdungeon.ability.Ability;
+import com.dunhili.eternitysdungeon.ability.AbilityErrorStatus;
+import com.dunhili.eternitysdungeon.buff.Buff;
+import com.dunhili.eternitysdungeon.buff.StatusCondition;
 import com.dunhili.eternitysdungeon.career.AdvancedCareer;
 import com.dunhili.eternitysdungeon.career.BaseCareer;
 import com.dunhili.eternitysdungeon.career.Career;
@@ -9,7 +13,9 @@ import com.dunhili.eternitysdungeon.item.Item;
 import com.dunhili.eternitysdungeon.item.Weapon;
 import com.dunhili.eternitysdungeon.item.WeaponAttributes;
 import com.dunhili.eternitysdungeon.map.Position;
+import com.dunhili.eternitysdungeon.map.Tile;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,6 +36,7 @@ public class Entity {
     private Weapon equippedWeapon = null;
     private Armor equippedArmor = null;
     private Item equippedOffHand = null;
+    private List<Buff> buffs = new ArrayList<>();
     private Position currentPosition;
 
     //////////////////////////////////////////////////////////////
@@ -126,12 +133,48 @@ public class Entity {
         // TODO
     }
 
-    public void castSpell(Entity target) {
-        // TODO
+    public AbilityErrorStatus useAbility(Ability ability) {
+        if (!hasEnoughHealth(ability.getHealthCost())) {
+            return AbilityErrorStatus.NOT_ENOUGH_HEALTH;
+        } else if (!hasEnoughMana(ability.getManaCost())) {
+            return AbilityErrorStatus.NOT_ENOUGH_MANA;
+        } else if (!ability.isAbiltyOffCooldown()) {
+            return AbilityErrorStatus.ON_COOLDOWN;
+        } else {
+            return ability.use();
+        }
+    }
+
+    public AbilityErrorStatus useAbility(Ability ability, Entity target) {
+        if (!hasEnoughHealth(ability.getHealthCost())) {
+            return AbilityErrorStatus.NOT_ENOUGH_HEALTH;
+        } else if (!hasEnoughMana(ability.getManaCost())) {
+            return AbilityErrorStatus.NOT_ENOUGH_MANA;
+        } else if (!ability.isAbiltyOffCooldown()) {
+            return AbilityErrorStatus.ON_COOLDOWN;
+        } else {
+            return ability.use(target);
+        }
+    }
+
+    public AbilityErrorStatus useAbility(Ability ability, Tile targetArea) {
+        if (!hasEnoughHealth(ability.getHealthCost())) {
+            return AbilityErrorStatus.NOT_ENOUGH_HEALTH;
+        } else if (!hasEnoughMana(ability.getManaCost())) {
+            return AbilityErrorStatus.NOT_ENOUGH_MANA;
+        } else if (!ability.isAbiltyOffCooldown()) {
+            return AbilityErrorStatus.ON_COOLDOWN;
+        } else {
+            return ability.use(targetArea);
+        }
+    }
+
+    public boolean hasEnoughMana(int manaCost) {
+        return attributes.getCurrentMana() >= manaCost;
     }
 
     public boolean useMana(int manaCost) {
-        if (attributes.getCurrentMana() >= manaCost) {
+        if (hasEnoughMana(manaCost)) {
             attributes.setCurrentMana(attributes.getCurrentMana() - manaCost);
             return true;
         }
@@ -146,8 +189,12 @@ public class Entity {
         attributes.setCurrentHP(attributes.getCurrentHP() + healAmount);
     }
 
+    public boolean hasEnoughHealth(int healthCost) {
+        return attributes.getCurrentHP() >= healthCost;
+    }
+
     public boolean useHealth(int healthCost) {
-        if (attributes.getCurrentHP() >= healthCost) {
+        if (hasEnoughHealth(healthCost)) {
             attributes.setCurrentHP(attributes.getCurrentHP() - healthCost);
             return true;
         }
@@ -156,6 +203,46 @@ public class Entity {
 
     public void damage(int damageAmount) {
         attributes.setCurrentHP(attributes.getCurrentHP() - damageAmount);
+    }
+
+    public boolean isPoisoned() {
+        return hasStatusCondition(StatusCondition.POISON);
+    }
+
+    public boolean isStunned() {
+        return hasStatusCondition(StatusCondition.STUN);
+    }
+
+    public boolean isBlinded() {
+        return hasStatusCondition(StatusCondition.BLIND);
+    }
+
+    public boolean isStoned() {
+        return hasStatusCondition(StatusCondition.STONE);
+    }
+
+    public boolean isConfused() {
+        return hasStatusCondition(StatusCondition.CONFUSE);
+    }
+
+    public boolean isSilenced() {
+        return hasStatusCondition(StatusCondition.SILENCE);
+    }
+
+    public boolean isBleeding() {
+        return hasStatusCondition(StatusCondition.BLEED);
+    }
+
+    public boolean isBerserked() {
+        return hasStatusCondition(StatusCondition.BERSERK);
+    }
+
+    public boolean isImmobilized() {
+        return hasStatusCondition(StatusCondition.IMMOBILIE);
+    }
+
+    public boolean isSleeping() {
+        return hasStatusCondition(StatusCondition.SLEEP);
     }
 
     public void promote(AdvancedCareer upgradedCareer) {
@@ -175,5 +262,16 @@ public class Entity {
         List<Item> oldItems = inventory.getItems();
         inventory.clear();
         return new Inventory(oldItems);
+    }
+
+    private boolean hasStatusCondition(StatusCondition conditionToCheck) {
+        for (Buff buff : buffs) {
+            for (StatusCondition condition : buff.getConditions()) {
+                if (conditionToCheck == condition) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

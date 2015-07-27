@@ -18,7 +18,6 @@ public class Ability {
     // FIELDS
     //////////////////////////////////////////////////////////////
 
-    private Entity entity;
     private String name             = "";
     private int healthCost          = 0;
     private int manaCost            = 0;
@@ -170,22 +169,6 @@ public class Ability {
     }
 
     /**
-     * Returns the {@link Entity} that has this ability.
-     * @return Entity that has this ability
-     */
-    public Entity getEntity() {
-        return entity;
-    }
-
-    /**
-     * Sets the Entity that has this ability to the given entity.
-     * @param entity entity to set
-     */
-    public void setEntity(Entity entity) {
-        this.entity = entity;
-    }
-
-    /**
      * Returns the String representation of this ability.
      * @return String representation
      */
@@ -217,10 +200,6 @@ public class Ability {
         return getName().hashCode();
     }
 
-    public boolean canUseAbility() {
-        return isAbiltyOffCooldown() && entity.useMana(manaCost) && entity.useHealth(healthCost);
-    }
-
     //////////////////////////////////////////////////////////////
     // CALLBACK METHODS
     //////////////////////////////////////////////////////////////
@@ -228,56 +207,56 @@ public class Ability {
     /**
      * Method that is called when the ability is used that doesn't require a target or area.
      * Abilities that override this should be sure to call the super.use() at the start.
-     * @return true if the ability can be used, otherwise false
+     * @return status of whether the ability was used
      */
-    public boolean use() {
-        if (canUseAbility()) {
+    public AbilityErrorStatus use() {
+        if (isAbiltyOffCooldown()) {
             turnsOnCooldown = cooldown;
-            return true;
+            return AbilityErrorStatus.NONE;
         }
-        return false;
+        return AbilityErrorStatus.ON_COOLDOWN;
     }
 
     /**
      * Method that is called when the ability is used that requires a single target.
      * Abilities that override this should be sure to call the super.use(Entity) at the start.
      * @param target target entity to use this ability on
-     * @return true if the ability can be used, otherwise false
+     * @return status of whether the ability was used
      */
-    public boolean use(Entity target) {
-        if (canUseAbility()) {
+    public AbilityErrorStatus use(Entity target) {
+        if (isAbiltyOffCooldown()) {
             turnsOnCooldown = cooldown;
-            return true;
+            return AbilityErrorStatus.NONE;
         }
-        return false;
+        return AbilityErrorStatus.ON_COOLDOWN;
     }
 
     /**
      * Method that is called when the ability is used that requires a target area.
      * Abilities that override this should be sure to call the super.use(Tile) at the start.
      * @param targetArea target area to use this ability at
-     * @return true if the ability can be used, otherwise false
+     * @return status of whether the ability was used
      */
-    public boolean use(Tile targetArea) {
-        if (canUseAbility()) {
+    public AbilityErrorStatus use(Tile targetArea) {
+        if (isAbiltyOffCooldown()) {
             turnsOnCooldown = cooldown;
-            return true;
+            return AbilityErrorStatus.NONE;
         }
-        return false;
+        return AbilityErrorStatus.ON_COOLDOWN;
     }
 
     /**
      * Method that is called when the ability is used that requires multiple targets.
      * Abilities that override this should be sure to call the super.use(List Entity) at the start.
      * @param targets list of entities to use this ability on
-     * @return true if the ability can be used, otherwise false
+     * @return status of whether the ability was used
      */
-    public boolean use(List<Entity> targets) {
-        if (canUseAbility()) {
+    public AbilityErrorStatus use(List<Entity> targets) {
+        if (isAbiltyOffCooldown()) {
             turnsOnCooldown = cooldown;
-            return true;
+            return AbilityErrorStatus.NONE;
         }
-        return false;
+        return AbilityErrorStatus.ON_COOLDOWN;
     }
 
     /**
