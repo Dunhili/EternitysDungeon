@@ -9,7 +9,10 @@ import com.dunhili.eternitysdungeon.utils.Logging;
 public class Armor extends EquippableItem {
     private static final String TAG = "Armor";
 
-    private ArmorAttributes armorAttr;
+    private ArmorType armorType = ArmorType.NONE;
+    private int physicalDefense = 0;
+    private int magicDefense = 0;
+    private int speedPenalty = 0;
 
     /**
      * Creates a new Armor with the given attributes.
@@ -17,19 +20,49 @@ public class Armor extends EquippableItem {
      * @param name name of the armor
      * @param value value (in gp) of the armor
      * @param id unique ID for the armor
+     * @param armorType type of armor
+     * @param physicalDefense amount of physical damage that is reduced
+     * @param magicDefense amount of magical damage that is reduced
+     * @param speedPenalty amount the armor encumbers the user
      */
-    public Armor(ArmorAttributes armorAttr, String name, int value, int id) {
+    public Armor(String name, int value, int id, ArmorType armorType, int physicalDefense, int magicDefense, int speedPenalty) {
         super(name, value, id);
-        this.armorAttr = armorAttr;
+        this.armorType = armorType;
+        this.physicalDefense = physicalDefense;
+        this.magicDefense = magicDefense;
+        this.speedPenalty = speedPenalty;
     }
 
     /**
-     * Returns the set of armor attributes.
-     * @return armor attributes
+     * Returns the type of armor.
+     * @return armor type
      */
-    public ArmorAttributes getArmorAttr() {
-        Logging.debug(TAG, "getArmorAttr()");
-        return armorAttr;
+    public ArmorType getArmorType() {
+        return armorType;
+    }
+
+    /**
+     * Returns the amount of physical damage that is reduced.
+     * @return physical damage reduction
+     */
+    public int getPhysicalDefense() {
+        return physicalDefense;
+    }
+
+    /**
+     * Returns the amount of magical damage that is reduced.
+     * @return magical damage reduction
+     */
+    public int getMagicDefense() {
+        return magicDefense;
+    }
+
+    /**
+     * Returns the amount that this armor reduces the speed by.
+     * @return speed reduction amount
+     */
+    public int getSpeedPenalty() {
+        return speedPenalty;
     }
 
     /**
@@ -39,7 +72,7 @@ public class Armor extends EquippableItem {
     @Override
     public Item clone() {
         Logging.debug(TAG, "clone()");
-        Item armor = new Armor(getArmorAttr(), getName(), getValue(), getId());
+        Item armor = new Armor(getName(), getValue(), getId(), getArmorType(), getPhysicalDefense(), getMagicDefense(), getSpeedPenalty());
         return armor;
     }
 }
