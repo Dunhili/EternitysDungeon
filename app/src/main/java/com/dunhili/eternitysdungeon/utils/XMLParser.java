@@ -1,5 +1,7 @@
 package com.dunhili.eternitysdungeon.utils;
 
+import com.dunhili.eternitysdungeon.utils.Logging;
+
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 
@@ -11,13 +13,35 @@ import org.w3c.dom.Element;
 import java.io.File;
 import java.util.HashMap;
 
+/**
+ * Utility class that creates a list of items, weapons, armors, etc. from a given XML file or from the
+ * default XML file. These methods should realistically only be called once in a static initializer, although
+ * it is possible to alter the xml files afterward and then reread them. 
+ * Created by Dunhili on 9/2/2015.
+ */
 public class XMLParser {
     private static final String TAG = "XMLParser";
     
-    public static HashMap<String, Armor> getListOfArmors() {
+    /**
+     * Can't be instantiated.
+     */
+    private XMLParser() { }
+    
+    /**
+     * Returns the list of armors using the default XML file 'armors.xml' in a hash map with the key as the name of
+     * the item. 
+     * @return list of armors in a hash map.
+     */    
+     public static HashMap<String, Armor> getListOfArmors() {
         return getListOfArmors("armors.xml");
     }
 
+	/**
+     * Returns the list of armors using the given XML file name in a hash map with the key as the name of
+     * the item. 
+     * @param xmlFileName name of the XML file with the weapons
+     * @return list of armors in a hash map.
+     */
     public static HashMap<String, Armor> getListOfArmors(String xmlFileName) {
         try {
             Document doc = getDocument(xmlFileName);
@@ -32,7 +56,17 @@ public class XMLParser {
                 Node nNode = nList.item(temp);
                 if (nNode.getNodeType() == Node.ELEMENT_NODE) {
                     Element eElement = (Element) nNode;
-                    // TODO
+                    
+                    String name = eElement.getAttribute("name");
+                    int value = Integer.parseInt(eElement.getElementsByTagName("value").item(0).getTextContent());
+                    int id = Integer.parseInt(eElement.getElementsByTagName("id").item(0).getTextContent());
+                    ArmorType armorType = ArmorType.valueOf(eElement.getElementsByTagName("armorType").item(0).getTextContent().toUpperCase()); 
+                    int physicalDefense = Integer.parseInt(eElement.getElementsByTagName("physDefense").item(0).getTextContent());
+                    int magicDefense = Integer.parseInt(eElement.getElementsByTagName("magicDefense").item(0).getTextContent());
+                    int speedPenalty = Integer.parseInt(eElement.getElementsByTagName("speedPenalty").item(0).getTextContent());
+                    
+                    Armor armor = new Armor(name, value, id, armorType, physicalDefense, magicDefense, speedPenalty);
+                    armorMap.put(name, armor);
                 }
             }
             return armorMap;
@@ -42,10 +76,21 @@ public class XMLParser {
         return null;
     }
 
+	/**
+     * Returns the list of weapons using the default XML file 'weapons.xml' in a hash map with the key as the name of
+     * the item. 
+     * @return list of weapons in a hash map.
+     */
     public static HashMap<String, Weapon> getListOfWeapons() {
         return getListOfWeapons("weapons.xml");
     }
 
+	/**
+     * Returns the list of weapons using the given XML file in a hash map with the key as the name of
+     * the item. 
+     * @param xmlFileName name of the XML file with the weapons
+     * @return list of weapons in a hash map.
+     */
     public static HashMap<String, Weapon> getListOfWeapons(String xmlFileName) {
         try {
             Document doc = getDocument(xmlFileName);
@@ -72,10 +117,10 @@ public class XMLParser {
                     int maxRange = Integer.parseInt(eElement.getElementsByTagName("maxRange").item(0).getTextContent());
                     int critModifier = Integer.parseInt(eElement.getElementsByTagName("critModifier").item(0).getTextContent());
                     int speedModifier = Integer.parseInt(eElement.getElementsByTagName("speedModifier").item(0).getTextContent());
-                    float strengthScaling = Float.parseFloat(eElement.getElementsByTagName("strengthScaling").item(0).getTextContent());
-                    float dexterityScaling = Float.parseFloat(eElement.getElementsByTagName("dexterityScaling").item(0).getTextContent());
-                    float intelligenceScaling = Float.parseFloat(eElement.getElementsByTagName("intelligenceScaling").item(0).getTextContent());
-                    float wisdomScaling = Float.parseFloat(eElement.getElementsByTagName("wisdomScaling").item(0).getTextContent());
+                    float strengthScaling = Float.parseFloat(eElement.getElementsByTagName("strScaling").item(0).getTextContent());
+                    float dexterityScaling = Float.parseFloat(eElement.getElementsByTagName("dexScaling").item(0).getTextContent());
+                    float intelligenceScaling = Float.parseFloat(eElement.getElementsByTagName("intScaling").item(0).getTextContent());
+                    float wisdomScaling = Float.parseFloat(eElement.getElementsByTagName("wisScaling").item(0).getTextContent());
                     
                     Weapon weapon = new Weapon(name, value, id, weaponType, accuracy, physicalAttack, magicAttack, minRange, maxRange, 
                     		critModifier, speedModifier, strengthScaling, dexterityScaling, intelligenceScaling, wisdomScaling);
@@ -89,6 +134,11 @@ public class XMLParser {
         return null;
     }
     
+    /**
+     * Opens the XML document with the given file name, or returns null if it can't be found or opened.
+     * @param xmlFileName name of the XML file to open
+     * @return XML document or null if not found
+     */
     private static Document getDocument(String xmlFileName) {
 		try {
 	        File xmlFile = new File(xmlFileName);
