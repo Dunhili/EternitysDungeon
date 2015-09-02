@@ -5,7 +5,7 @@ import com.dunhili.eternitysdungeon.character.Stat;
 /**
  * Created by Dunhili on 5/23/2015.
  */
-public class Weapon extends Item {
+public class Weapon extends EquippableItem {
     private static final String TAG = "Weapon";
 
     private WeaponAttributes weaponAttr;
