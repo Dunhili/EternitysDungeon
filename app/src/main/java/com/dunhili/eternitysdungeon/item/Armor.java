@@ -6,7 +6,7 @@ import com.dunhili.eternitysdungeon.utils.Logging;
  * Represents the attributes for the armor a character would wear.
  * Created by Dunhili on 5/23/2015.
  */
-public class Armor extends Item {
+public class Armor extends EquippableItem {
     private static final String TAG = "Armor";
 
     private ArmorAttributes armorAttr;
