@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<armors>
+  <armor name = "Cloth">
+    <value>5</value>
+    <id>200</id>
+    <armorType>Light</armorType>
+    <physDefense>5</physDefense>
+    <magicDefense>0</magicDefense>
+    <speedPenalty>0</speedPenalty>
+  </armor>
+  <armor name = "Chain Mail">
+    <value>5</value>
+    <id>200</id>
+    <armorType>Medium</armorType>
+    <physDefense>5</physDefense>
+    <magicDefense>0</magicDefense>
+    <speedPenalty>0</speedPenalty>
+  </armor>
+  <armor name = "Platemail">
+    <value>5</value>
+    <id>200</id>
+    <armorType>Heavy</armorType>
+    <physDefense>5</physDefense>
+    <magicDefense>0</magicDefense>
+    <speedPenalty>0</speedPenalty>
+  </armor>
+</armors>
