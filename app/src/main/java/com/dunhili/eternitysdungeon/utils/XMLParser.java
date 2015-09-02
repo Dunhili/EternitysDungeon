@@ -21,6 +21,11 @@ public class XMLParser {
     public static HashMap<String, Armor> getListOfArmors(String xmlFileName) {
         try {
             Document doc = getDocument(xmlFileName);
+            if (doc == null) {
+            	Logger.error("Could not find/open xml file.");
+            	return null;
+            }
+            
             NodeList nList = doc.getElementsByTagName("armor");
             HashMap<String, Armor> armorMap = new HashMap<>();
             for (int temp = 0; temp < nList.getLength(); temp++) {
@@ -43,7 +48,12 @@ public class XMLParser {
 
     public static HashMap<String, Weapon> getListOfWeapons(String xmlFileName) {
         try {
-            Document doc = getDocument(xmlFileName);       
+            Document doc = getDocument(xmlFileName);
+            if (doc == null) {
+            	Logger.error("Could not find/open xml file.");
+            	return null;
+            }
+            
             NodeList nList = doc.getElementsByTagName("weapon");
             HashMap<String, Weapon> weaponMap = new HashMap<>();
             for (int temp = 0; temp < nList.getLength(); temp++) {
@@ -79,12 +89,18 @@ public class XMLParser {
         return null;
     }
     
-    private static getDocument(String xmlFileName) {
-        File xmlFile = new File(xmlFileName);
-        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-        Document doc = dBuilder.parse(xmlFile);
-        doc.getDocumentElement().normalize();
-        return doc;
+    private static Document getDocument(String xmlFileName) {
+		try {
+	        File xmlFile = new File(xmlFileName);
+	        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+	        DocumentBuilder dBuilder;
+			dBuilder = dbFactory.newDocumentBuilder();
+	        Document doc = dBuilder.parse(xmlFile);
+	        doc.getDocumentElement().normalize();
+	        return doc;
+		} catch (ParserConfigurationException | IOException | SAXException e) {
+			Logger.error(TAG, e.getMessage(), e);
+		}
+		return null;
     }
 }
