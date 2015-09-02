@@ -27,7 +27,7 @@ public class ItemSet {
     };
 
     // Item IDs 100-199 are weapons
-    public static final Weapon BRONZE_DAGGER = new Weapon(new WeaponAttributes(WeaponType.DAGGER, 115, 2, 0, 1, 1, 1, 1, 1.0f, 0.0f, 0.0f, 0.0f), "Bronze Dagger", 2, 100);
+    /*public static final Weapon BRONZE_DAGGER = new Weapon(new WeaponAttributes(WeaponType.DAGGER, 115, 2, 0, 1, 1, 1, 1, 1.0f, 0.0f, 0.0f, 0.0f), "Bronze Dagger", 2, 100);
     public static final Weapon BRONZE_SWORD = new Weapon(new WeaponAttributes(WeaponType.SWORD, 105, 4, 0, 1, 1, 1, 1, 1.0f, 0.0f, 0.0f, 0.0f), "Bronze Sword", 5, 101);
     public static final Weapon BRONZE_AXE = new Weapon(new WeaponAttributes(WeaponType.AXE, 95, 4, 0, 1, 1, 1, 1, 1.0f, 0.0f, 0.0f, 0.0f), "Bronze Axe", 6, 102);
     public static final Weapon BRONZE_MACE = new Weapon(new WeaponAttributes(WeaponType.MACE, 105, 4, 0, 1, 1, 1, 1, 1.0f, 0.0f, 0.0f, 0.0f), "Bronze Mace", 4, 103);
@@ -55,7 +55,7 @@ public class ItemSet {
     public static final Weapon STEEL_HANDAXE = new Weapon(new WeaponAttributes(WeaponType.HANDAXE, 70, 4, 0, 1, 1, 1, 1, 1.0f, 0.0f, 0.0f, 0.0f), "Steel Handaxe", 11, 125);
     public static final Weapon STEEL_JAVELIN = new Weapon(new WeaponAttributes(WeaponType.JAVELIN, 75, 4, 0, 1, 1, 1, 1, 1.0f, 0.0f, 0.0f, 0.0f), "Steel Javelin", 11, 126);
     public static final Weapon STEEL_BOW = new Weapon(new WeaponAttributes(WeaponType.BOW, 85, 4, 0, 1, 1, 1, 1, 1.0f, 0.0f, 0.0f, 0.0f), "Steel Bow", 16, 127);
-    public static final Weapon STEEL_CROSSBOW = new Weapon(new WeaponAttributes(WeaponType.CROSSBOW, 95, 4, 0, 1, 1, 1, 1, 1.0f, 0.0f, 0.0f, 0.0f), "Steel Crossbow", 20, 128);
+    public static final Weapon STEEL_CROSSBOW = new Weapon(new WeaponAttributes(WeaponType.CROSSBOW, 95, 4, 0, 1, 1, 1, 1, 1.0f, 0.0f, 0.0f, 0.0f), "Steel Crossbow", 20, 128);*/
 
     // Item IDs 200-299 is armor
 }

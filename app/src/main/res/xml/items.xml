@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<items>
+  <item name = "Light Potion of Healing">
+      <value>2</value>
+      <id>0</id>
+      <description>Restores 20 HP to the target.</description>
+  </item>
+</items>

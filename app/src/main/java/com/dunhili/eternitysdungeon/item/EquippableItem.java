@@ -1,3 +1,5 @@
+package com.dunhili.eternitysdungeon.item;
+
 /**
  * Intermediate item class that is subclassed by armors and weapons, which are equipped by the
  * character rather than simply carried around. 

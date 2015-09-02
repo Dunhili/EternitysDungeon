@@ -16,7 +16,6 @@ public class Armor extends EquippableItem {
 
     /**
      * Creates a new Armor with the given attributes.
-     * @param armorAttr wrapper for the armor attributes
      * @param name name of the armor
      * @param value value (in gp) of the armor
      * @param id unique ID for the armor

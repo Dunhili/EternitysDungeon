@@ -11,7 +11,6 @@ import com.dunhili.eternitysdungeon.item.Armor;
 import com.dunhili.eternitysdungeon.item.Inventory;
 import com.dunhili.eternitysdungeon.item.Item;
 import com.dunhili.eternitysdungeon.item.Weapon;
-import com.dunhili.eternitysdungeon.item.WeaponAttributes;
 import com.dunhili.eternitysdungeon.map.Position;
 import com.dunhili.eternitysdungeon.map.Tile;
 
@@ -86,47 +85,23 @@ public class Entity {
      * @return
      */
     public int getPhysicalAttackDamage() {
-        if (equippedWeapon == null) {
-            return attributes.getStrength().getValue();
-        } else {
-            WeaponAttributes attr = equippedWeapon.getWeaponAttr();
-            float damage = attr.getPhysicalAttack();
-            damage += (attr.getStrengthScaling() * getAttributes().getStrength().getValue());
-            damage += (attr.getDexterityScaling() * getAttributes().getDexterity().getValue());
-            return (int) damage;
-        }
+        //todo
+        return 0;
     }
 
     public int getSpellAttackDamage() {
-        if (equippedWeapon == null) {
-            return attributes.getIntelligence().getValue();
-        } else {
-            WeaponAttributes attr = equippedWeapon.getWeaponAttr();
-            float damage = attr.getMagicAttack();
-            damage += (attr.getIntelligenceScaling() * getAttributes().getIntelligence().getValue());
-            damage += (attr.getWillpowerScaling() * getAttributes().getWillpower().getValue());
-            return (int) damage;
-        }
+        //todo
+        return 0;
     }
 
     public int getPhysicalDefense() {
-        int defense = attributes.getDefense().getValue();
-        if (equippedArmor != null) {
-            defense += equippedArmor.getArmorAttr().getPhysicalDefense();
-        } else if (equippedOffHand instanceof Armor) {
-            defense += ((Armor) equippedOffHand).getArmorAttr().getPhysicalDefense();
-        }
-        return defense;
+        //todo
+        return 0;
     }
 
     public int getSpellDefense() {
-        int resistance = attributes.getResistance().getValue();
-        if (equippedArmor != null) {
-            resistance += equippedArmor.getArmorAttr().getMagicDefense();
-        } else if (equippedOffHand instanceof Armor) {
-            resistance += ((Armor) equippedOffHand).getArmorAttr().getMagicDefense();
-        }
-        return resistance;
+        //todo
+        return 0;
     }
 
     public void attack(Entity target) {

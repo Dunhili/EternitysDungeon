@@ -15,10 +15,7 @@ public abstract class Item implements Comparable<Item>, Cloneable {
     //////////////////////////////////////////////////////////////
     private static final String TAG = "Item";
 
-    private static final int MAX_ITEM_COUNT = 99;
-
-    private String name = "";
-
+    private String name   = "";
     private int value     = 0;
     private int id        = 0;
 

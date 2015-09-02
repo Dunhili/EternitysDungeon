@@ -1,16 +1,23 @@
 package com.dunhili.eternitysdungeon.utils;
 
-import com.dunhili.eternitysdungeon.utils.Logging;
+import com.dunhili.eternitysdungeon.R;
+import com.dunhili.eternitysdungeon.item.Armor;
+import com.dunhili.eternitysdungeon.item.ArmorType;
+import com.dunhili.eternitysdungeon.item.Weapon;
+import com.dunhili.eternitysdungeon.item.WeaponType;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
 import org.w3c.dom.Element;
+import org.xml.sax.SAXException;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 
 /**
@@ -46,7 +53,7 @@ public class XMLParser {
         try {
             Document doc = getDocument(xmlFileName);
             if (doc == null) {
-            	Logger.error("Could not find/open xml file.");
+            	Logging.error(TAG, "Could not find/open xml file.");
             	return null;
             }
             
@@ -95,7 +102,7 @@ public class XMLParser {
         try {
             Document doc = getDocument(xmlFileName);
             if (doc == null) {
-            	Logger.error("Could not find/open xml file.");
+            	Logging.error(TAG, "Could not find/open xml file.");
             	return null;
             }
             
@@ -141,7 +148,7 @@ public class XMLParser {
      */
     private static Document getDocument(String xmlFileName) {
 		try {
-	        File xmlFile = new File(xmlFileName);
+	        File xmlFile = new File("res/xml/" + xmlFileName);
 	        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 	        DocumentBuilder dBuilder;
 			dBuilder = dbFactory.newDocumentBuilder();
@@ -149,7 +156,7 @@ public class XMLParser {
 	        doc.getDocumentElement().normalize();
 	        return doc;
 		} catch (ParserConfigurationException | IOException | SAXException e) {
-			Logger.error(TAG, e.getMessage(), e);
+			Logging.error(TAG, e.getMessage(), e);
 		}
 		return null;
     }
