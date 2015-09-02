@@ -228,7 +228,7 @@ public class Inventory {
     public boolean sellItem(Item item, int amount) {
         if (items.containsKey(item) && items.get(item) >= amount) {
             removeItem(item, amount);
-            money += item.getValue() * amount;
+            money += (item.getValue() / 2) * amount;
             return true;
         }
         return false;
